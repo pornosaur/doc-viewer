@@ -49,8 +49,7 @@ fabric.properties
 
 /cmake-build-*/
 
-/**/.idea
-
+**/.idea/
 /build
 .idea/misc.xml
 .idea/vcs.xml
