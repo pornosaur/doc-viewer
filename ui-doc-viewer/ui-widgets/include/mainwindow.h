@@ -13,15 +13,15 @@ namespace Ui {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
 
-    void mousePressEvent(QMouseEvent *ev);
+    ~MainWindow() override;
+
+    void mousePressEvent(QMouseEvent *ev) override;
 
 private:
     Ui::MainWindow *ui;
@@ -29,7 +29,7 @@ private:
 
 
 private slots:
-    void on_code_edit_editingFinished();
+
     void set_image_graphics(QImage &img);
 };
 

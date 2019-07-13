@@ -2,84 +2,154 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>668</width>
-    <height>905</height>
+    <width>477</width>
+    <height>369</height>
    </rect>
-  </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>668</width>
-    <height>905</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>668</width>
-    <height>905</height>
+    <width>0</width>
+    <height>50</height>
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Document Viewer</string>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>10</y>
-      <width>41</width>
-      <height>841</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="tools_layout">
-     <item>
-      <widget class="QToolButton" name="toolButton">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0" colspan="2">
+     <layout class="QGridLayout" name="grid_layout_tools">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="vertical_widget_doc" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <property name="spacing">
+        <number>5</number>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>40</width>
-         <height>16777215</height>
-        </size>
+       <property name="rightMargin">
+        <number>0</number>
        </property>
-       <property name="text">
-        <string>...</string>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="qview::DocumentRenderer" name="doc_view">
-    <property name="geometry">
-     <rect>
-      <x>55</x>
-      <y>11</y>
-      <width>601</width>
-      <height>841</height>
-     </rect>
-    </property>
-   </widget>
+       <item>
+        <widget class="QTabWidget" name="tab_widget_doc">
+         <property name="currentIndex">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QWidget" name="vertical_widget_property" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>50</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QToolBox" name="tool_box_property">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="page">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>148</width>
+            <height>210</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Page 1</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="page_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>148</width>
+            <height>210</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>Page 2</string>
+          </attribute>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>668</width>
+     <width>477</width>
      <height>22</height>
     </rect>
    </property>
@@ -87,38 +157,25 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="descript_m"/>
     <addaction name="separator"/>
-    <addaction name="fullsceen_m"/>
+    <addaction name="actionExit"/>
     <addaction name="separator"/>
-    <addaction name="exit_m"/>
+   </widget>
+   <widget class="QMenu" name="menu_doc">
+    <property name="title">
+     <string>Document</string>
+    </property>
    </widget>
    <addaction name="menu_file"/>
+   <addaction name="menu_doc"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="descript_m">
-   <property name="text">
-    <string>Description</string>
-   </property>
-  </action>
-  <action name="fullsceen_m">
-   <property name="text">
-    <string>Fullscreen</string>
-   </property>
-  </action>
-  <action name="exit_m">
+  <widget class="QStatusBar" name="statusbar_info"/>
+  <action name="actionExit">
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>qview::DocumentRenderer</class>
-   <extends>QGraphicsView</extends>
-   <header location="global">document_renderer.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

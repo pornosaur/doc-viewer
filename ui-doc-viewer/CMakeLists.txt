@@ -32,6 +32,7 @@ set(SOURCE
         # WIDGETS
         ui-widgets/src/mainwindow.cpp
         ui-widgets/src/document_renderer.cpp
+        ui-widgets/src/document_tab_widget.cpp
 
         # MAIN
         main.cpp
@@ -50,6 +51,7 @@ set(INCLUDE
         # WIDGETS
         ui-widgets/include/mainwindow.h
         ui-widgets/include/document_renderer.h
+        ui-widgets/include/document_tab_widget.h
 
         )
 
