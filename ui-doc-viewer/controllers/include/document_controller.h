@@ -1,0 +1,8 @@
+//
+// Created by pornosaur on 15.7.19.
+//
+
+#ifndef DOC_VIEWER_DOCUMENT_CONTROLLER_H
+#define DOC_VIEWER_DOCUMENT_CONTROLLER_H
+
+#endif //DOC_VIEWER_DOCUMENT_CONTROLLER_H

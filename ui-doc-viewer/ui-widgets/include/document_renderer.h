@@ -12,7 +12,9 @@ namespace qview {
     class DocumentRenderer : public QGraphicsView {
 
     public:
-        explicit DocumentRenderer(QWidget *parent = nullptr) : QGraphicsView(parent) {};
+        explicit DocumentRenderer(QWidget *parent = nullptr) : QGraphicsView(parent) {
+            
+        };
 
     protected:
         void mousePressEvent(QMouseEvent *ev) override;

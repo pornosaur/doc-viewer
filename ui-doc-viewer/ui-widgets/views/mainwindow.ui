@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>369</height>
+    <width>530</width>
+    <height>407</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -33,6 +33,9 @@
     </sizepolicy>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="bottomMargin">
+     <number>2</number>
+    </property>
     <item row="0" column="0" colspan="2">
      <layout class="QGridLayout" name="grid_layout_tools">
       <item row="0" column="0">
@@ -117,25 +120,26 @@
             <x>0</x>
             <y>0</y>
             <width>148</width>
-            <height>210</height>
+            <height>286</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Page 1</string>
           </attribute>
-         </widget>
-         <widget class="QWidget" name="page_2">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>148</width>
-            <height>210</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>Page 2</string>
-          </attribute>
+          <layout class="QVBoxLayout" name="vertical_layout_page">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -149,7 +153,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>477</width>
+     <width>530</width>
      <height>22</height>
     </rect>
    </property>
@@ -165,6 +169,8 @@
     <property name="title">
      <string>Document</string>
     </property>
+    <addaction name="actionLoad_document"/>
+    <addaction name="actionLoad_document_list"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_doc"/>
@@ -173,6 +179,16 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionLoad_document_list">
+   <property name="text">
+    <string>Load document list</string>
+   </property>
+  </action>
+  <action name="actionLoad_document">
+   <property name="text">
+    <string>Load document</string>
    </property>
   </action>
  </widget>

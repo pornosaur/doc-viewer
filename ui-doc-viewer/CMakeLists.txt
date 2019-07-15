@@ -27,12 +27,13 @@ set(SOURCE
         models/src/document.cpp
 
         # CONTROLLERS
-
+        controllers/src/document_controller.cpp
 
         # WIDGETS
         ui-widgets/src/mainwindow.cpp
         ui-widgets/src/document_renderer.cpp
         ui-widgets/src/document_tab_widget.cpp
+        ui-widgets/src/document_page_property.cpp
 
         # MAIN
         main.cpp
@@ -47,11 +48,13 @@ set(INCLUDE
         models/include/document.h
 
         #CONTROLLERS
+        controllers/include/document_controller.h
 
         # WIDGETS
         ui-widgets/include/mainwindow.h
         ui-widgets/include/document_renderer.h
         ui-widgets/include/document_tab_widget.h
+        ui-widgets/include/document_page_property.h
 
         )
 

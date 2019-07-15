@@ -2,12 +2,15 @@
 // Created by pornosaur on 1.4.19.
 //
 
+#include <iostream>
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include "document.h"
 #include "document_tab_widget.h"
-#include <iostream>
+#include "document_page_property.h"
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -25,6 +28,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->tab_widget_doc->setTabText(ui->tab_widget_doc->indexOf(tab1),
                                    QApplication::translate("MainWindow", "Tab 1", Q_NULLPTR));
 
+    //TODO: Creating page property like this
+    auto *page1 = new qview::DocPageProperty();
+    ui->tool_box_property->addItem(page1, QStringLiteral("Property"));
+    ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(page1),
+                                       QApplication::translate("MainWindow", "Property", Q_NULLPTR));
 }
 
 MainWindow::~MainWindow() {

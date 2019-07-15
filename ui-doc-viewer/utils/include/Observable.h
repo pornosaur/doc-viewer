@@ -27,9 +27,9 @@ namespace utils {
 
         virtual void notify(void *data, NotifyType type);
 
-        void subscribe(Observer *);
+        void subscribe(Observer *observer);
 
-        void unsubscribe(Observer *);
+        void unsubscribe(Observer *observer);
     };
 };
 
