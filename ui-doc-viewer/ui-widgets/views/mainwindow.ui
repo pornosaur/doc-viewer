@@ -169,7 +169,7 @@
     <property name="title">
      <string>Document</string>
     </property>
-    <addaction name="actionLoad_document"/>
+    <addaction name="action_load_document"/>
     <addaction name="actionLoad_document_list"/>
    </widget>
    <addaction name="menu_file"/>
@@ -186,7 +186,7 @@
     <string>Load document list</string>
    </property>
   </action>
-  <action name="actionLoad_document">
+  <action name="action_load_document">
    <property name="text">
     <string>Load document</string>
    </property>

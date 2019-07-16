@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <mutex>
+#include <memory>
+#include <QtCore/QObject>
 
 #include "Observer.h"
 
@@ -23,14 +25,19 @@ namespace utils {
         std::mutex list_mutex;
 
     public:
-        virtual ~Observable();
+        ~Observable();
 
-        virtual void notify(void *data, NotifyType type);
+        virtual void connect_signals() = 0;
+
+        void notify(void *data, NotifyType type);
+
+        void subscribe_and_connect(Observer *observer, QObject *obj);
 
         void subscribe(Observer *observer);
 
         void unsubscribe(Observer *observer);
     };
-};
+
+}
 
 #endif //PROJECT_OBSERVABLE_H

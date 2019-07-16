@@ -9,11 +9,14 @@
 #include <QtWidgets/QDataWidgetMapper>
 #include <QtWidgets/QGraphicsPixmapItem>
 
+#include "Observable.h"
+#include "document_controller.h"
+
 namespace Ui {
     class MainWindow;
 }
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow, public utils::Observable {
 Q_OBJECT
 
 public:
@@ -23,14 +26,23 @@ public:
 
     void mousePressEvent(QMouseEvent *ev) override;
 
+    void connect_signals() override;
+
 private:
     Ui::MainWindow *ui;
-    QGraphicsPixmapItem pixmap;
+
+    /* Controllers */
+    qcontroller::DocController *doc_controller;
 
 
-private slots:
+public slots:
 
-    void set_image_graphics(QImage &img);
+    void action_load_document();
+
+    void received_image(const QImage &image);
+
+signals:
+    void load_document(const QString &doc_path);
 };
 
 #endif //DOC_VIEWER_MAINWINDOW_H

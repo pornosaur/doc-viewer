@@ -17,10 +17,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     QMetaObject::connectSlotsByName(this);
 
-/*    ui->doc_view->setScene(new QGraphicsScene());
-    ui->doc_view->scene()->addItem(&pixmap);
-
-    ui->doc_view->setMouseTracking(true);*/
+    doc_controller = new qcontroller::DocController();
+    subscribe(doc_controller);
 
     //TODO: Creating new tab like this
     auto *tab1 = new qview::DocTabWidget();
@@ -33,14 +31,33 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->tool_box_property->addItem(page1, QStringLiteral("Property"));
     ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(page1),
                                        QApplication::translate("MainWindow", "Property", Q_NULLPTR));
+
+    connect_signals();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::set_image_graphics(QImage &img) {
-    pixmap.setPixmap(QPixmap::fromImage(img.rgbSwapped()));
+void MainWindow::connect_signals() {
+    /* ui connections */
+    connect(ui->action_load_document, SIGNAL(triggered()), this, SLOT(action_load_document()));
+    connect(this, SIGNAL(load_document(const QString&)), doc_controller, SLOT(load_document(const QString&)));
+    connect(doc_controller, SIGNAL(document_changed(const QImage & )), this, SLOT(received_image(const QImage &)));
+//    connect(this, SIGNAL())
+}
+
+void MainWindow::action_load_document() {
+    QString file_name = QFileDialog::getOpenFileName(this, "Document");
+
+
+    emit load_document(file_name);
+}
+
+void MainWindow::received_image(const QImage &image) {
+    auto *tab = (qview::DocTabWidget *) ui->tab_widget_doc->currentWidget();
+
+    tab->get_renderer()->set_document_pixmap(image);
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *ev) {

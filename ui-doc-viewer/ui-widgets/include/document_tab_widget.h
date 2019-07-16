@@ -26,6 +26,8 @@ namespace qview {
         explicit DocTabWidget(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
         ~DocTabWidget() override = default;
+
+        inline DocumentRenderer *get_renderer() const { return doc_renderer; }
     };
 
 }

@@ -12,6 +12,7 @@ include_directories(
         ui-widgets/include
         models/include
         utils/include
+        controllers/include
 )
 
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)

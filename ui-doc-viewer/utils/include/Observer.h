@@ -5,10 +5,15 @@
 #ifndef PROJECT_OBSERVER_H
 #define PROJECT_OBSERVER_H
 
-class Observer {
+#include <QtCore>
+
+class Observer : public QObject {
+    Q_OBJECT
+
 public:
-    virtual ~Observer() = 0;
-    virtual void update() = 0;
+    virtual void update(void *data) = 0;
 };
+
+
 
 #endif //PROJECT_OBSERVER_H
