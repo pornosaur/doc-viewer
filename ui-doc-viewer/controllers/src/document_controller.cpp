@@ -15,11 +15,12 @@ void DocController::update(void *data) {
     //TODO: update smth
 }
 
-void DocController::load_document(const QString &doc_path) {
+void DocController::load_document() {
     //TODO: loading doc. from file here
+    QString file_name = QFileDialog::getOpenFileName(nullptr, "Document");
 
-    std::cout << doc_path.toStdString() << std::endl;
+    std::cout << file_name.toStdString() << std::endl;
 
-    QImage img(doc_path);
+    QImage img(file_name);
     emit document_changed(img);
 }

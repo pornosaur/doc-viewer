@@ -41,23 +41,16 @@ MainWindow::~MainWindow() {
 
 void MainWindow::connect_signals() {
     /* ui connections */
-    connect(ui->action_load_document, SIGNAL(triggered()), this, SLOT(action_load_document()));
-    connect(this, SIGNAL(load_document(const QString&)), doc_controller, SLOT(load_document(const QString&)));
-    connect(doc_controller, SIGNAL(document_changed(const QImage & )), this, SLOT(received_image(const QImage &)));
-//    connect(this, SIGNAL())
-}
+    connect(ui->action_load_document, SIGNAL(triggered()), doc_controller, SLOT(load_document()));
+    connect(doc_controller, SIGNAL(document_changed(
+                                           const QImage & )), ui->tab_widget_doc, SLOT(rendering_image(
+                                                                                               const QImage &)));
 
-void MainWindow::action_load_document() {
-    QString file_name = QFileDialog::getOpenFileName(this, "Document");
-
-
-    emit load_document(file_name);
+    //    connect(this, SIGNAL())
 }
 
 void MainWindow::received_image(const QImage &image) {
-    auto *tab = (qview::DocTabWidget *) ui->tab_widget_doc->currentWidget();
 
-    tab->get_renderer()->set_document_pixmap(image);
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *ev) {

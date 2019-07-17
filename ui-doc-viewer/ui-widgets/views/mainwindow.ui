@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>407</height>
+    <width>658</width>
+    <height>474</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -73,9 +73,15 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTabWidget" name="tab_widget_doc">
+        <widget class="qview::DocTabViewWidget" name="tab_widget_doc">
+         <property name="tabPosition">
+          <enum>QTabWidget::North</enum>
+         </property>
          <property name="currentIndex">
           <number>-1</number>
+         </property>
+         <property name="elideMode">
+          <enum>Qt::ElideMiddle</enum>
          </property>
         </widget>
        </item>
@@ -120,7 +126,7 @@
             <x>0</x>
             <y>0</y>
             <width>148</width>
-            <height>286</height>
+            <height>353</height>
            </rect>
           </property>
           <attribute name="label">
@@ -153,7 +159,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>530</width>
+     <width>658</width>
      <height>22</height>
     </rect>
    </property>
@@ -192,6 +198,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>qview::DocTabViewWidget</class>
+   <extends>QTabWidget</extends>
+   <header>document_tab_view_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

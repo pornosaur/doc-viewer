@@ -35,6 +35,9 @@ set(SOURCE
         ui-widgets/src/document_renderer.cpp
         ui-widgets/src/document_tab_widget.cpp
         ui-widgets/src/document_page_property.cpp
+        ui-widgets/src/document_tab_view_widget.cpp
+
+        ui-widgets/src/template_rect.cpp
 
         # MAIN
         main.cpp
@@ -56,6 +59,9 @@ set(INCLUDE
         ui-widgets/include/document_renderer.h
         ui-widgets/include/document_tab_widget.h
         ui-widgets/include/document_page_property.h
+        ui-widgets/include/document_tab_view_widget.h
+
+        ui-widgets/include/template_rect.h
 
         )
 

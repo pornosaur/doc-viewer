@@ -37,12 +37,11 @@ private:
 
 public slots:
 
-    void action_load_document();
 
     void received_image(const QImage &image);
 
 signals:
-    void load_document(const QString &doc_path);
+
 };
 
 #endif //DOC_VIEWER_MAINWINDOW_H

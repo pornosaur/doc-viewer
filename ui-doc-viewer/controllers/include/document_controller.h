@@ -24,7 +24,7 @@ namespace qcontroller {
 
     public slots:
 
-        void load_document(const QString &doc_path);
+        void load_document();
 
     signals:
 

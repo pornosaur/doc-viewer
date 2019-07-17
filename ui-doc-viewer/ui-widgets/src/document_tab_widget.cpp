@@ -21,7 +21,7 @@ DocTabWidget::DocTabWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent,
     scroll_area_doc_content = new QWidget();
     scroll_area_doc_content->setObjectName(QStringLiteral("scroll_area_doc_content"));
     //TODO: May set static width and height while win in init.
-    scroll_area_doc_content->setGeometry(QRect(0, 0, scroll_area_doc->width(), scroll_area_doc->height()));
+    //scroll_area_doc_content->setGeometry(QRect(0, 0, scroll_area_doc->width(), scroll_area_doc->height()));
 
     vertical_layout_content = new QVBoxLayout(scroll_area_doc_content);
     vertical_layout_content->setSpacing(0);
@@ -31,7 +31,7 @@ DocTabWidget::DocTabWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent,
     doc_renderer = new DocumentRenderer(scroll_area_doc_content);
     doc_renderer->setObjectName(QStringLiteral("graphics_view_doc_renderer"));
 
-    vertical_layout_content->addWidget(doc_renderer);
+    vertical_layout_content->addWidget(doc_renderer, Qt::AlignCenter);
     scroll_area_doc->setWidget(scroll_area_doc_content);
-    vertical_layout->addWidget(scroll_area_doc);
+    vertical_layout->addWidget(scroll_area_doc, Qt::AlignCenter);
 }
