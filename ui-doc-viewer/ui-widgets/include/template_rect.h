@@ -8,6 +8,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
+
 #include <iostream>
 
 
@@ -17,23 +18,17 @@ namespace qview {
     private:
         bool contains = false;
 
-       static QPen selected_pen, unselected_pen;
+        static QPen selected_pen, unselected_pen;
 
 
         void selecting_area(bool select = true);
 
+        void init();
+
     public:
-        explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr) : QGraphicsRectItem(rect, parent) {
-            setAcceptHoverEvents(true);
-        };
+        explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr);
 
-        TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr)
-                : QGraphicsRectItem(x, y, w, h, parent) {
-            setAcceptHoverEvents(true);
-
-            setBrush(Qt::NoBrush);
-            setPen(QPen(QBrush(QColor(0, 0, 0)), 2));
-        };
+        TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
 
     protected:
         void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
