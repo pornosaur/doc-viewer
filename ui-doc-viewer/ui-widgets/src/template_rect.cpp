@@ -27,8 +27,18 @@ TemplateRect::TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *pa
 void TemplateRect::init() {
     setAcceptHoverEvents(true);
 
-    setBrush(Qt::NoBrush);
-    setPen(QPen(QBrush(QColor(0, 0, 0)), 2));
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+
+    auto lb_p = rect().bottomRight();
+    auto *it = new QGraphicsRectItem(lb_p.x() - 5, lb_p.y() - 5, 10, 10, this);
+    childItems().push_back(it);
+
+    QPen p(QBrush(QColor(0, 0, 0, 255)), 2);
+    setPen(p);
+
+    QBrush b(QColor(0, 0, 0, 20), Qt::Dense3Pattern);
+    setBrush(b);
 }
 
 void TemplateRect::selecting_area(bool select) {
@@ -47,6 +57,8 @@ void TemplateRect::selecting_area(bool select) {
 
 
 void TemplateRect::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
+    QGraphicsRectItem::hoverMoveEvent(event);
+
     QRectF m_rect(event->pos().x() - 20, event->pos().y() - 20, 40, 40);
 
     if (!rect().contains(m_rect)) {
@@ -57,5 +69,7 @@ void TemplateRect::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
 }
 
 void TemplateRect::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+    QGraphicsRectItem::hoverLeaveEvent(event);
+
     selecting_area(false);
 }

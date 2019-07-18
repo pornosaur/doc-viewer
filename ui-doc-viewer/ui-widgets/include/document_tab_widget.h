@@ -15,7 +15,7 @@ namespace qview {
 
     class DocTabWidget : public QWidget {
     private:
-        QVBoxLayout *vertical_layout, *vertical_layout_content;
+        QHBoxLayout *vertical_layout, *vertical_layout_content;
         QScrollArea *scroll_area_doc;
         QWidget *scroll_area_doc_content;
 

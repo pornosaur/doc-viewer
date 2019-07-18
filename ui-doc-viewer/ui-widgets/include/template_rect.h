@@ -8,6 +8,7 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsProxyWidget>
 
 #include <iostream>
 
@@ -15,6 +16,7 @@
 namespace qview {
 
     class TemplateRect : public QGraphicsRectItem {
+
     private:
         bool contains = false;
 
@@ -25,15 +27,15 @@ namespace qview {
 
         void init();
 
-    public:
-        explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr);
-
-        TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
-
     protected:
         void hoverMoveEvent(QGraphicsSceneHoverEvent *event) override;
 
         void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+
+    public:
+        explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr);
+
+        TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
 
     };
 

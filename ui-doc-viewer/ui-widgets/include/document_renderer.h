@@ -13,35 +13,21 @@
 namespace qview {
 
     class DocumentRenderer : public QGraphicsView {
-        Q_OBJECT
+    Q_OBJECT
 
     private:
-        QGraphicsPixmapItem doc_pixmap;
+        QGraphicsPixmapItem *doc_pixmap;
+        QGraphicsScene *_scene;
 
     public:
-        explicit DocumentRenderer(QWidget *parent = nullptr) : QGraphicsView(parent) {
-            setMouseTracking(true);
-
-
-            setScene(new QGraphicsScene(this));
-            scene()->addItem(&doc_pixmap);
-            setStyleSheet("background-color: rgba(255, 255, 255, 0.1);");
-           // auto *r = scene()->addRect(0, 0, 300 , 300);
-            scene()->addItem(new TemplateRect(0, 0, 300, 300));
-
-            /*r->brush().setColor(QColor::fromRgb(255, 0, 0));
-            r->setPen(QPen(QColor::fromRgb(255, 0, 0)));*/
-
-            //repaint();
-            //scene()->removeItem(r);
-            //doc_pixmap.setOpacity(0.1);
-        };
+        explicit DocumentRenderer(QWidget *parent = nullptr);
 
     public slots:
         void set_document_pixmap(const QImage &image);
 
     protected:
         void mousePressEvent(QMouseEvent *ev) override;
+
     };
 }
 
