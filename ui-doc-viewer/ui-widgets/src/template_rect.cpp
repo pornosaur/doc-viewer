@@ -31,7 +31,7 @@ void TemplateRect::init() {
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
-
+    setFlag(QGraphicsItem::ItemIsFocusable, true);
 
     auto lb_p = rect().bottomRight();
     resize_button = new QGraphicsRectItem(lb_p.x() - 10, lb_p.y() - 10, 10, 10, this);
@@ -79,6 +79,11 @@ void TemplateRect::resize_area(const QPointF &pos) {
                            resize_button->rect().width(), resize_button->rect().height());
 
     setRect(new_rect);
+}
+
+void TemplateRect::remove_rect_from_scene() {
+    scene()->removeItem(this);
+    delete this;
 }
 
 void TemplateRect::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
@@ -136,4 +141,12 @@ QVariant TemplateRect::itemChange(GraphicsItemChange change, const QVariant &val
     }
 
     return QGraphicsItem::itemChange(change, value);
+}
+
+void TemplateRect::keyPressEvent(QKeyEvent *event) {
+    QGraphicsItem::keyPressEvent(event);
+
+    if (event->key() == Qt::Key_Delete) {
+        remove_rect_from_scene();
+    }
 }

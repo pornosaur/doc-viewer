@@ -15,7 +15,7 @@ namespace qcontroller {
     Q_OBJECT
 
     private:
-        bool load_document_from_file(const QString &path);
+
 
     public:
         ~DocController() override;

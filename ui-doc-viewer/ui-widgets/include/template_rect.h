@@ -10,6 +10,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
+#include <QKeyEvent>
 
 #include <iostream>
 
@@ -30,6 +31,8 @@ namespace qview {
 
         void resize_area(const QPointF &pos);
 
+        void remove_rect_from_scene();
+
         void init();
 
     protected:
@@ -43,7 +46,9 @@ namespace qview {
 
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
-        QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+        QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+
+        void keyPressEvent(QKeyEvent *event) override;
 
     public:
         explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr);

@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(page1),
                                        QApplication::translate("MainWindow", "Property", Q_NULLPTR));
 
+    ui->statusbar_info->addWidget(new QSpinBox(ui->statusbar_info));
+
     connect_signals();
 }
 
@@ -54,5 +56,7 @@ void MainWindow::received_image(const QImage &image) {
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *ev) {
+    QMainWindow::mousePressEvent(ev);
+
     std::cout << "CLICKED!!" << std::endl;
 }

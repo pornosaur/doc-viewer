@@ -33,10 +33,10 @@ void DocumentRenderer::set_document_pixmap(const QImage &image) {
     setMaximumWidth(image.width() + parentWidget()->style()->pixelMetric(QStyle::PM_ScrollBarExtent));
     setMinimumWidth(0);
 
-    auto *t = new TemplateRect(0,0,300,300);
-    _scene->addItem(t);
 
-    std::cout << "RECT: " << t->x() << std::endl;
+    _scene->addItem(new TemplateRect(0,0,300,300));
+
+
 }
 
 void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
