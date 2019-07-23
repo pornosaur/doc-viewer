@@ -9,6 +9,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsProxyWidget>
+#include <QGraphicsScene>
 
 #include <iostream>
 

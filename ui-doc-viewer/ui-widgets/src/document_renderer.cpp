@@ -27,7 +27,7 @@ void DocumentRenderer::set_document_pixmap(const QImage &image) {
     doc_pixmap->setPixmap(QPixmap::fromImage(image));
 
     setGeometry(0, 0, image.width(), image.height());
-    setSceneRect(0, 0, image.width(), image.height());
+    _scene->setSceneRect(0, 0, image.width(), image.height());
     setFrameStyle(QFrame::NoFrame);
 
     setMaximumWidth(image.width() + parentWidget()->style()->pixelMetric(QStyle::PM_ScrollBarExtent));

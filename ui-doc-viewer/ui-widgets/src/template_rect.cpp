@@ -4,6 +4,7 @@
 
 #include <QPen>
 #include <QCursor>
+#include <QtMath>
 
 #include "template_rect.h"
 
@@ -61,11 +62,13 @@ void TemplateRect::resize_area(const QPointF &pos) {
 
     QRectF new_rect(rect());
 
-    qreal w = (pos.x() - rect().x());
-    w = w <= 0 ? rect().width() : w;
+    qreal pos_mouse_x = pos.x() > scene()->width() ? scene()->width() : pos.x();
+    qreal w = (pos_mouse_x - sceneBoundingRect().x());
+    w = (w <= 0) ? 10 : w;
 
-    qreal h = (pos.y() - rect().y());
-    h = h <= 0 ? rect().height() : h;
+    qreal pos_mouse_y = pos.y() > scene()->height() ? scene()->height() : pos.y();
+    qreal h = (pos_mouse_y - sceneBoundingRect().y());
+    h = h <= 0 ? 10 : h;
 
     new_rect.setWidth(w);
     new_rect.setHeight(h);
@@ -103,7 +106,19 @@ void TemplateRect::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 void TemplateRect::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsItem::mouseMoveEvent(event);
 
-    if (resizing) resize_area(event->pos());
+    if (!resizing && (!(sceneBoundingRect().x() >= 0 && sceneBoundingRect().topRight().x() <= scene()->width()) ||
+                      !(sceneBoundingRect().y() >= 0 && sceneBoundingRect().bottomRight().y() <= scene()->height()))) {
+        qreal s_x = sceneBoundingRect().x() < 0 ? 0 : sceneBoundingRect().x();
+        s_x = sceneBoundingRect().topRight().x() > scene()->width() ? scene()->width() - sceneBoundingRect().width()
+                                                                    : s_x;
+        qreal s_y = sceneBoundingRect().y() < 0 ? 0 : sceneBoundingRect().y();
+        s_y = sceneBoundingRect().bottomRight().y() > scene()->height() ? scene()->height() -
+                                                                          sceneBoundingRect().height() : s_y;
+
+        setPos(s_x, s_y);
+    }
+
+    if (resizing) resize_area(event->scenePos());
 }
 
 void TemplateRect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
@@ -117,8 +132,14 @@ void TemplateRect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 
 QVariant TemplateRect::itemChange(GraphicsItemChange change, const QVariant &value) {
+
+    QVariant val = value;
     if (change == QGraphicsItem::ItemSelectedChange) {
         resize_button->setVisible(value.toBool());
+    } else if (change == QGraphicsItem::ItemPositionChange) {
+        // std::cout << "Change pos.. " << value.toPointF().x() << std::endl;
+
+        //if (sceneBoundingRect().x() < -1) return  QGraphicsItem::itemChange(change, QPoint(0, sceneBoundingRect().y()));
     }
 
     return QGraphicsItem::itemChange(change, value);
