@@ -19,7 +19,7 @@ DocumentRenderer::DocumentRenderer(QWidget *parent) : QGraphicsView(parent) {
 
     doc_pixmap = new QGraphicsPixmapItem();
     _scene->addItem(doc_pixmap);
-    _scene->addItem(new TemplateRect(0, 0, 300, 300));
+
 }
 
 
@@ -31,6 +31,12 @@ void DocumentRenderer::set_document_pixmap(const QImage &image) {
     setFrameStyle(QFrame::NoFrame);
 
     setMaximumWidth(image.width() + parentWidget()->style()->pixelMetric(QStyle::PM_ScrollBarExtent));
+    setMinimumWidth(0);
+
+    auto *t = new TemplateRect(0,0,300,300);
+    _scene->addItem(t);
+
+    std::cout << "RECT: " << t->x() << std::endl;
 }
 
 void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
