@@ -16,13 +16,16 @@ QPen TemplateRect::unselected_pen = QPen(QBrush(QColor(0, 0, 0)), 2);
 QPen TemplateRect::selected_pen = QPen(QBrush(QColor(255, 0, 0)), 3);
 
 
-TemplateRect::TemplateRect(const QRectF &rect, QGraphicsItem *parent) : QGraphicsRectItem(rect, parent) {
+TemplateRect::TemplateRect(const QRectF &rect, QGraphicsItem *parent) : QGraphicsRectItem(
+        QRectF(QPointF(0, 0), rect.size()), parent) {
     init();
+    moveBy(rect.x(), rect.y());
 }
 
 TemplateRect::TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent)
-        : QGraphicsRectItem(x, y, w, h, parent) {
+        : QGraphicsRectItem(0, 0, w, h, parent) {
     init();
+    moveBy(x, y);
 }
 
 void TemplateRect::init() {
@@ -102,7 +105,8 @@ void TemplateRect::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 void TemplateRect::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsRectItem::mousePressEvent(event);
 
-    if (!resizing && resize_button->contains(event->pos())) {
+    std::cout << "TEst" << std::endl;
+    if (!resizing && (resize_button->contains(event->pos()) || force_resizing)) {
         resizing = true;
         setFlag(QGraphicsItem::ItemIsMovable, false);
     }

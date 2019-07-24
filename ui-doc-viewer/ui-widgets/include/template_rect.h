@@ -20,7 +20,7 @@ namespace qview {
     class TemplateRect : public QGraphicsRectItem {
 
     private:
-        bool contains = false, resizing = false;
+        bool contains = false, resizing = false, force_resizing = false;
 
         static QPen selected_pen, unselected_pen;
 
@@ -54,6 +54,8 @@ namespace qview {
         explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr);
 
         TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
+
+        inline void setResizing(bool flag = true) { force_resizing = flag; }
 
     };
 

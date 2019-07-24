@@ -22,6 +22,14 @@ DocumentRenderer::DocumentRenderer(QWidget *parent) : QGraphicsView(parent) {
 
 }
 
+void DocumentRenderer::add_template_area(const QPointF &pos) {
+    auto *template_area = new TemplateRect(pos.x(), pos.y(), 10, 10);
+    _scene->addItem(template_area);
+
+    template_area->setResizing(true);
+    //template_area->setFocus();
+    template_area->setSelected(true);
+}
 
 void DocumentRenderer::set_document_pixmap(const QImage &image) {
     doc_pixmap->setPixmap(QPixmap::fromImage(image));
@@ -33,24 +41,28 @@ void DocumentRenderer::set_document_pixmap(const QImage &image) {
     setMaximumWidth(image.width() + parentWidget()->style()->pixelMetric(QStyle::PM_ScrollBarExtent));
     setMinimumWidth(0);
 
-
-    _scene->addItem(new TemplateRect(0,0,300,300));
-
-
+    _scene->addItem(new TemplateRect(0, 0, 300, 300));
 }
 
 void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
     QGraphicsView::mousePressEvent(ev);
 
-    std::cout << "DOC: CLICKED!!" << std::endl;
+    if (!adding_area && !scene()->focusItem()) {
+        add_template_area(mapToScene(ev->pos()));
+        adding_area = true;
+        QGraphicsView::mousePressEvent(ev);
+    }
+}
 
-    QRect r(0, 0, 300, 300);
-    const QPoint p = ev->pos();
-    if (r.contains(p)) {
-        std::cout << "CONTAINS" << std::endl;
+void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
+    if (adding_area) {
+        auto *area = ((TemplateRect *) scene()->focusItem());
+        area->setResizing(false);
 
+
+        adding_area = false;
     }
 
-
+    QGraphicsView::mouseReleaseEvent(ev);
 }
 

@@ -10,6 +10,7 @@
 #include "document.h"
 #include "document_tab_widget.h"
 #include "document_page_property.h"
+#include "pagination_widget.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -32,7 +33,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(page1),
                                        QApplication::translate("MainWindow", "Property", Q_NULLPTR));
 
-    ui->statusbar_info->addWidget(new QSpinBox(ui->statusbar_info));
+    auto *p = new qview::PaginationWidget();
+    ui->statusbar_info->addWidget(p);
 
     connect_signals();
 }

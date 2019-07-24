@@ -19,6 +19,10 @@ namespace qview {
         QGraphicsPixmapItem *doc_pixmap;
         QGraphicsScene *_scene;
 
+        bool adding_area = false;
+
+        void add_template_area(const QPointF &pos);
+
     public:
         explicit DocumentRenderer(QWidget *parent = nullptr);
 
@@ -27,6 +31,8 @@ namespace qview {
 
     protected:
         void mousePressEvent(QMouseEvent *ev) override;
+
+        void mouseReleaseEvent(QMouseEvent *ev) override;
 
     };
 }

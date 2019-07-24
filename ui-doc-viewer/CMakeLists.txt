@@ -39,6 +39,8 @@ set(SOURCE
 
         ui-widgets/src/template_rect.cpp
 
+        ui-widgets/src/pagination_widget.cpp
+
         # MAIN
         main.cpp
         )
@@ -63,6 +65,8 @@ set(INCLUDE
 
         ui-widgets/include/template_rect.h
 
+        ui-widgets/include/pagination_widget.h
+
         )
 
 set(UI  # FORE WIDGETS .ui FILES
@@ -71,6 +75,8 @@ set(UI  # FORE WIDGETS .ui FILES
 
 qt5_wrap_ui(UI_GEN ${UI})
 qt5_wrap_cpp(CPP_GEN ${INCLUDE})
+
+file(COPY images DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${SOURCE} ${INCLUDE} ${UI_GEN} ${CPP_GEN})
 
