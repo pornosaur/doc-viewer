@@ -28,6 +28,11 @@ TemplateRect::TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *pa
     moveBy(x, y);
 }
 
+void TemplateRect::setForceResizing(bool flag) {
+    resizing = flag;
+    setFlag(QGraphicsItem::ItemIsMovable, !flag);
+}
+
 void TemplateRect::init() {
     setAcceptHoverEvents(true);
 
@@ -105,10 +110,8 @@ void TemplateRect::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 void TemplateRect::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsRectItem::mousePressEvent(event);
 
-    std::cout << "TEst" << std::endl;
-    if (!resizing && (resize_button->contains(event->pos()) || force_resizing)) {
-        resizing = true;
-        setFlag(QGraphicsItem::ItemIsMovable, false);
+    if (!resizing && resize_button->contains(event->pos())) {
+        setForceResizing(true);
     }
 }
 
@@ -133,8 +136,7 @@ void TemplateRect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     QGraphicsItem::mouseReleaseEvent(event);
 
     if (resizing) {
-        setFlag(QGraphicsItem::ItemIsMovable, true);
-        resizing = false;
+        setForceResizing(false);
     }
 }
 

@@ -11,6 +11,7 @@
 #include "document_tab_widget.h"
 #include "document_page_property.h"
 #include "pagination_widget.h"
+#include "tool_box_page_area.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -28,10 +29,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                                    QApplication::translate("MainWindow", "Tab 1", Q_NULLPTR));
 
     //TODO: Creating page property like this
-    auto *page1 = new qview::DocPageProperty();
-    ui->tool_box_property->addItem(page1, QStringLiteral("Property"));
+    auto *page1 = new qview::ToolBoxPageArea();
+    ui->tool_box_property->addItem(page1, QStringLiteral("Area"));
     ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(page1),
-                                       QApplication::translate("MainWindow", "Property", Q_NULLPTR));
+                                       QApplication::translate("MainWindow", "Area", Q_NULLPTR));
+    ui->tool_box_property->setItemToolTip(ui->tool_box_property->indexOf(page1),
+                                          QApplication::translate("MainWindow", "Selected area", Q_NULLPTR));
 
     auto *p = new qview::PaginationWidget();
     ui->statusbar_info->addWidget(p);

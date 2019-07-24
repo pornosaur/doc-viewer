@@ -55,7 +55,7 @@ namespace qview {
 
         TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
 
-        inline void setResizing(bool flag = true) { force_resizing = flag; }
+        void setForceResizing(bool flag = true);
 
     };
 
