@@ -44,19 +44,20 @@ void DocumentRenderer::set_document_pixmap(const QImage &image) {
 }
 
 void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
+    QGraphicsView::mousePressEvent(ev);
+
     if (!adding_area && !scene()->focusItem()) {
         add_template_area(mapToScene(ev->pos()));
         adding_area = true;
-
+        QGraphicsView::mousePressEvent(ev);
     }
 
-    QGraphicsView::mousePressEvent(ev);
 }
 
 void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
     if (adding_area) {
         if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
-            area->setResizing(false);
+            area->setForceResizing(false);
         }
 
         adding_area = false;
