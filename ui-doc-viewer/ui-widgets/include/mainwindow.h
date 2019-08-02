@@ -12,6 +12,7 @@
 
 #include "Observable.h"
 #include "document_controller.h"
+#include "tool_box_page_area.h"
 
 namespace Ui {
     class MainWindow;
@@ -25,17 +26,16 @@ public:
 
     ~MainWindow() override;
 
-    void mousePressEvent(QMouseEvent *ev) override;
-
     void connect_signals() override;
 
 private:
     Ui::MainWindow *ui;
 
+    qview::ToolBoxPageArea *tool_box_area_page;
+
     /* Controllers */
     qcontroller::DocController *doc_controller;
     qcontroller::PropertiesController *prop_controller;
-
 
 
 };

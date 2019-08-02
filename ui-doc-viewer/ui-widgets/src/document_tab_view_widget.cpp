@@ -27,6 +27,9 @@ void DocTabViewWidget::create_new_tab(const QString &tab_name, const QString &uu
     connect(new_tab, &DocTabWidget::remove_area, this, &DocTabViewWidget::remove_area);
     connect(new_tab, &DocTabWidget::update_area_struct, this, &DocTabViewWidget::update_area_struct);
 
+    setCurrentIndex(idx);
+    setTabEnabled(idx, true);
+
     emit inquiry_for_page_image(uuid, 1);
 }
 

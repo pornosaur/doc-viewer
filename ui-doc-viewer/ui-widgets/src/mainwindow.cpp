@@ -25,11 +25,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 
     //TODO: Creating page property like this
-    auto *page1 = new qview::ToolBoxPageArea();
-    ui->tool_box_property->addItem(page1, QStringLiteral("Area"));
-    ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(page1),
+    tool_box_area_page = new qview::ToolBoxPageArea();
+    ui->tool_box_property->addItem(tool_box_area_page, QStringLiteral("Area"));
+    ui->tool_box_property->setItemText(ui->tool_box_property->indexOf(tool_box_area_page),
                                        QApplication::translate("MainWindow", "Area", Q_NULLPTR));
-    ui->tool_box_property->setItemToolTip(ui->tool_box_property->indexOf(page1),
+    ui->tool_box_property->setItemToolTip(ui->tool_box_property->indexOf(tool_box_area_page),
                                           QApplication::translate("MainWindow", "Selected area", Q_NULLPTR));
 
     auto *p = new qview::PaginationWidget();
@@ -61,11 +61,8 @@ void MainWindow::connect_signals() {
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, prop_controller,
             &qcontroller::PropertiesController::update_area_struct);
 
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, tool_box_area_page,
+            &qview::ToolBoxPageArea::update_area_properties);
+
 }
 
-
-void MainWindow::mousePressEvent(QMouseEvent *ev) {
-    QMainWindow::mousePressEvent(ev);
-
-    std::cout << "CLICKED!!" << std::endl;
-}

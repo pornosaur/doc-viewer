@@ -108,7 +108,7 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
 
     form_layout_area->setWidget(7, QFormLayout::LabelRole, label_x);
 
-    line_edit_x = new QLineEdit(this);
+    line_edit_x = new QLabel(this); //new QLineEdit(this);
     line_edit_x->setObjectName(QStringLiteral("line_edit_x"));
     line_edit_x->setMinimumSize(QSize(42, 20));
     line_edit_x->setMaximumSize(QSize(16777215, 20));
@@ -122,7 +122,7 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
 
     form_layout_area->setWidget(8, QFormLayout::LabelRole, label_y);
 
-    line_edit_y = new QLineEdit(this);
+    line_edit_y = new QLabel(this);//new QLineEdit(this);
     line_edit_y->setObjectName(QStringLiteral("line_edit_y"));
     line_edit_y->setMinimumSize(QSize(42, 20));
     line_edit_y->setMaximumSize(QSize(16777215, 20));
@@ -136,7 +136,7 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
 
     form_layout_area->setWidget(9, QFormLayout::LabelRole, label_width);
 
-    line_edit_width = new QLineEdit(this);
+    line_edit_width = new QLabel(this); //new QLineEdit(this);
     line_edit_width->setObjectName(QStringLiteral("line_edit_width"));
     QSizePolicy sizePolicy4(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
     sizePolicy4.setHorizontalStretch(0);
@@ -155,7 +155,7 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
 
     form_layout_area->setWidget(10, QFormLayout::LabelRole, label_height);
 
-    line_edit_height = new QLineEdit(this);
+    line_edit_height = new QLabel(this); // new QLineEdit(this);
     line_edit_height->setObjectName(QStringLiteral("line_edit_height"));
     line_edit_height->setMinimumSize(QSize(42, 20));
     line_edit_height->setMaximumSize(QSize(16777215, 20));
@@ -197,7 +197,8 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
     check_box_extract->setText(QApplication::translate("MainWindow", "Extract", Q_NULLPTR));
 }
 
-void ToolBoxPageArea::update_area_properties(const area::area_t &area) {
+void
+ToolBoxPageArea::update_area_properties(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area) {
     line_edit_name->setText(area.name.c_str());
     combo_box_type->setCurrentIndex(static_cast<int>(area.type));
     label_page_num->setText(std::to_string(area.page).c_str());
@@ -206,9 +207,9 @@ void ToolBoxPageArea::update_area_properties(const area::area_t &area) {
     check_box_conceal->setChecked(area::is_action_set(area.actions, area::Actions::CONCEAL));
     check_box_extract->setChecked(area::is_action_set(area.actions, area::Actions::EXTRACT));
 
-    line_edit_x->setText(std::to_string(area.dimension._x).c_str());
-    line_edit_y->setText(std::to_string(area.dimension._y).c_str());
-    line_edit_width->setText(std::to_string(area.dimension._w).c_str());
-    line_edit_height->setText(std::to_string(area.dimension._h).c_str());
+    line_edit_x->setText(std::to_string((int)area.dimension._x).c_str());
+    line_edit_y->setText(std::to_string((int)area.dimension._y).c_str());
+    line_edit_width->setText(std::to_string((int)area.dimension._w).c_str());
+    line_edit_height->setText(std::to_string((int)area.dimension._h).c_str());
 
 }

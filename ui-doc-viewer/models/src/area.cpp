@@ -21,6 +21,13 @@ Area::Area(area::area_t area_struct, QString area_uuid) : _area_struct(std::move
 
 }
 
+void Area::set_area_struct(const area::area_t &area_struct) {
+    _area_struct.dimension = area_struct.dimension.was_set ? area_struct.dimension : _area_struct.dimension;
+    _area_struct.actions = area_struct.actions == area::Actions::TRANSIENT ? _area_struct.actions : area_struct.actions;
+    _area_struct.page = area_struct.page == 0 ? _area_struct.page : area_struct.page;
+    _area_struct.name = area_struct.name.empty() ? _area_struct.name : area_struct.name;
+}
+
 //-------------------------------------
 
 //--------AREA GROUP CLASS-------------

@@ -28,9 +28,7 @@ namespace qmodel {
 
         inline area::area_t get_area_struct() const { return _area_struct; }
 
-        inline void set_area_struct(area::area_t area_struct) {
-            std::cout << "UPDATING" << std::endl;
-            _area_struct = std::move(area_struct); }
+        void set_area_struct(const area::area_t &area_struct);
     };
 
 

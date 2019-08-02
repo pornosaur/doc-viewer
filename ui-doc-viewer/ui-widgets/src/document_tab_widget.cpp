@@ -43,6 +43,7 @@ DocTabWidget::DocTabWidget(const QString &uuid, QWidget *parent, Qt::WindowFlags
 DocTabWidget::~DocTabWidget() {
     disconnect(doc_renderer, &DocumentRenderer::create_new_area, this, &DocTabWidget::create_new_area);
     disconnect(doc_renderer, &DocumentRenderer::remove_area, this, &DocTabWidget::remove_area);
+    disconnect(doc_renderer, &DocumentRenderer::update_area_struct, this, &DocTabWidget::update_area_struct);
 
     delete doc_renderer;
 }
