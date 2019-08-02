@@ -38,6 +38,8 @@ namespace qview {
         void create_new_area(const area::area_t &area);
 
         void remove_area(const QString &area_uuid);
+
+        void update_area_struct(const QString &area_uuid, const area::area_t &area_struct);
     };
 
 }

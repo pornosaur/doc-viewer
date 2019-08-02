@@ -35,7 +35,6 @@ AreaGroup::~AreaGroup() {
 
 Area *AreaGroup::create_area(const area::area_t &area_struct) {
     auto *area = new Area(area_struct);
-
     areas_map.insert(area->get_area_uuid(), area);
 
     return area;
@@ -49,6 +48,11 @@ QString AreaGroup::create_area_uuid(const area::area_t &area_struct) {
 void AreaGroup::remove_area(const QString &area_uuid) {
     auto *area = areas_map.take(area_uuid);
     delete area;
+}
+
+void AreaGroup::update_area_struct(const QString &area_uuid, const area::area_t &area_struct) {
+    auto *area = areas_map.value(area_uuid, nullptr);
+    if (area) area->set_area_struct(area_struct);
 }
 
 //-------------------------------------

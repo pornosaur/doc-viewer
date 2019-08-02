@@ -22,7 +22,7 @@ namespace qview {
     private:
         QString _uuid;
 
-        bool contains = false, resizing = false, force_resizing = false;
+        bool contains = false, resizing = false, has_changed = false;
 
         static QPen selected_pen, unselected_pen;
 
@@ -32,8 +32,6 @@ namespace qview {
         void selecting_area(bool select = true);
 
         void resize_area(const QPointF &pos);
-
-        void remove_rect_from_scene();
 
         void init();
 
@@ -61,6 +59,14 @@ namespace qview {
         inline QString get_uuid() const { return _uuid; }
 
         inline void set_uuid(const QString &uuid) { _uuid = uuid; }
+
+        inline qreal get_width() const { return rect().width(); }
+
+        inline qreal get_height() const { return rect().height(); }
+
+        inline bool is_changed() const { return has_changed; }
+
+        inline void set_changed(bool flag) { has_changed = flag; }
 
     };
 

@@ -16,6 +16,7 @@ namespace area {
     Q_NAMESPACE
 
     enum class Type : unsigned int {
+        TRANSIENT,
         ITERATION_BEGIN,    //Add new type above begin
         TEXT,
         IMAGE,
@@ -27,6 +28,7 @@ namespace area {
     Q_ENUM_NS(Type)
 
     enum class Actions : unsigned int {
+        TRANSIENT = 0x00,
         OCR = 0x01,
         CONCEAL = 0x02,
         EXTRACT = 0x04,
@@ -34,15 +36,16 @@ namespace area {
     };
 
     struct area_dimension_t {
-
         float _x, _y;
         float _w, _h;
 
-        area_dimension_t(float x, float y, float w, float h) : _x(x), _y(y), _w(w), _h(h) {}
+        bool was_set;
+
+        area_dimension_t(float x, float y, float w, float h) : _x(x), _y(y), _w(w), _h(h), was_set(true) {}
 
         area_dimension_t(float x, float y) : area_dimension_t(x, y, 10, 10) {}
 
-        area_dimension_t() : area_dimension_t(-1, -1) {}
+        area_dimension_t() : area_dimension_t(-1, -1) { was_set = false; }
     };
 
     struct area_t {
@@ -50,9 +53,13 @@ namespace area {
         Type type;
         Actions actions;
         area_dimension_t dimension;
-        unsigned int page;
+        size_t page;
 
-        area_t() : name(""), type(Type::TEXT), actions(Actions::OCR), dimension(area_dimension_t()), page(1) {}
+        area_t(std::string _name, Type _type, Actions _actions, area_dimension_t dim, size_t _page) :
+                name(std::move(_name)), type(_type), actions(_actions), dimension(dim), page(_page) {}
+
+        area_t() : area_t("", Type::TRANSIENT, Actions::TRANSIENT, area_dimension_t(), 0) {}
+
     };
 
     template<typename T>

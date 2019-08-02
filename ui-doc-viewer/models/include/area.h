@@ -28,7 +28,9 @@ namespace qmodel {
 
         inline area::area_t get_area_struct() const { return _area_struct; }
 
-        inline void set_area_struct(area::area_t area_struct) { _area_struct = std::move(area_struct); }
+        inline void set_area_struct(area::area_t area_struct) {
+            std::cout << "UPDATING" << std::endl;
+            _area_struct = std::move(area_struct); }
     };
 
 
@@ -39,7 +41,7 @@ namespace qmodel {
         QMap<QString, Area *> areas_map;
 
     public:
-        AreaGroup(QString doc_uuid);
+        explicit AreaGroup(QString doc_uuid);
 
         ~AreaGroup();
 
@@ -48,6 +50,8 @@ namespace qmodel {
         QString create_area_uuid(const area::area_t &area_struct);
 
         void remove_area(const QString &area_uuid);
+
+        void update_area_struct(const QString &area_uuid, const area::area_t &area_struct);
     };
 }
 

@@ -30,6 +30,8 @@ namespace qview {
 
         void remove_template_area();
 
+        void update_template_area(TemplateRect *area);
+
     public:
         explicit DocumentRenderer(const QString &uuid, QWidget *parent = nullptr);
 
@@ -46,6 +48,8 @@ namespace qview {
         void create_new_area(const area::area_t &area);
 
         void remove_area(const QString &area_uuid);
+
+        void update_area_struct(const QString &area_uuid, const area::area_t &area_struct);
 
     protected:
         void mousePressEvent(QMouseEvent *ev) override;

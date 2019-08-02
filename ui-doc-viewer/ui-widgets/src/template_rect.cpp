@@ -87,11 +87,8 @@ void TemplateRect::resize_area(const QPointF &pos) {
                            resize_button->rect().width(), resize_button->rect().height());
 
     setRect(new_rect);
-}
 
-void TemplateRect::remove_rect_from_scene() {
-    scene()->removeItem(this);
-    delete this;
+    has_changed = true;
 }
 
 void TemplateRect::hoverMoveEvent(QGraphicsSceneHoverEvent *event) {
@@ -127,6 +124,8 @@ void TemplateRect::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
         s_y = (y() + rect().height()) > scene()->height() ? scene()->height() - rect().height() : s_y;
 
         setPos(s_x, s_y);
+
+        has_changed = true;
     }
 
     if (resizing) resize_area(event->scenePos());
@@ -144,6 +143,8 @@ void TemplateRect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 QVariant TemplateRect::itemChange(GraphicsItemChange change, const QVariant &value) {
     if (change == QGraphicsItem::ItemSelectedChange) {
         resize_button->setVisible(value.toBool());
+    } else if (change == QGraphicsItem::ItemPositionChange) {
+        has_changed = true;
     }
 
     return QGraphicsItem::itemChange(change, value);

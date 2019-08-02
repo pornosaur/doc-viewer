@@ -58,6 +58,8 @@ void MainWindow::connect_signals() {
             &qview::DocTabViewWidget::update_area_uuid);
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_remove_area, prop_controller,
             &qcontroller::PropertiesController::remove_area);
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, prop_controller,
+            &qcontroller::PropertiesController::update_area_struct);
 
 }
 

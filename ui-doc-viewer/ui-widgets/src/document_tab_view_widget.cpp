@@ -25,6 +25,7 @@ void DocTabViewWidget::create_new_tab(const QString &tab_name, const QString &uu
     //TODO: impl. disconnect while closing tab!
     connect(new_tab, &DocTabWidget::create_new_area, this, &DocTabViewWidget::create_new_area);
     connect(new_tab, &DocTabWidget::remove_area, this, &DocTabViewWidget::remove_area);
+    connect(new_tab, &DocTabWidget::update_area_struct, this, &DocTabViewWidget::update_area_struct);
 
     emit inquiry_for_page_image(uuid, 1);
 }
@@ -41,6 +42,13 @@ void DocTabViewWidget::remove_area(const QString &area_uuid) {
     if (!tab) return;
 
     emit send_remove_area(tab->get_renderer()->get_internal_id(), area_uuid);
+}
+
+void DocTabViewWidget::update_area_struct(const QString &area_uuid, const area::area_t &area_struct) {
+    auto *tab = (DocTabWidget *) currentWidget();
+    if (!tab) return;
+
+    emit send_update_area_struct(tab->get_renderer()->get_internal_id(), area_uuid, area_struct);
 }
 
 void DocTabViewWidget::rendering_image(const QImage &image) {

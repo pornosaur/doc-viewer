@@ -32,13 +32,18 @@ namespace qview {
 
         void remove_area(const QString &area_uuid);
 
+        void update_area_struct(const QString &area_uuid, const area::area_t &area_struct);
+
     signals:
+
         void inquiry_for_page_image(const QString &uuid, int page);
 
         void send_new_area(const QString &doc_uuid, const area::area_t &area);
 
         void send_remove_area(const QString &doc_uuid, const QString &area_uuid);
 
+        void
+        send_update_area_struct(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area_struct);
 
     };
 

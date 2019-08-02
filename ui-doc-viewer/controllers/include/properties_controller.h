@@ -27,11 +27,15 @@ namespace qcontroller {
         void update(void *data) override {};
 
     public slots:
+
         void add_area(const QString &doc_uuid, const area::area_t &area_struct);
 
         void remove_area(const QString &doc_uuid, const QString &area_uuid);
 
+        void update_area_struct(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area_struct);
+
     signals:
+
         void send_area_uuid(const QString &area_uuid);
     };
 

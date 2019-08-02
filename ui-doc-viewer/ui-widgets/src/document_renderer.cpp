@@ -50,6 +50,16 @@ void DocumentRenderer::remove_template_area() {
     }
 }
 
+void DocumentRenderer::update_template_area(TemplateRect *area) {
+    if (!area->is_changed()) return;
+
+    area::area_t area_struct;
+    area_struct.dimension = area::area_dimension_t(area->x(), area->y(), area->get_width(), area->get_height());
+    area->set_changed(false);
+
+    emit update_area_struct(area->get_uuid(), area_struct);
+}
+
 void DocumentRenderer::set_document_pixmap(const QImage &image) {
     doc_pixmap->setPixmap(QPixmap::fromImage(image));
 
@@ -81,6 +91,11 @@ void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
         }
 
         adding_area = false;
+    }
+
+
+    if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
+        update_template_area(area);
     }
 
     QGraphicsView::mouseReleaseEvent(ev);

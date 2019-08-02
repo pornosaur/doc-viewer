@@ -33,7 +33,12 @@ void PropertiesController::add_area(const QString &doc_uuid, const area::area_t 
 }
 
 void PropertiesController::remove_area(const QString &doc_uuid, const QString &area_uuid) {
-    qmodel::AreaGroup *area_group = areas_map.value(doc_uuid, nullptr);
-
+    auto *area_group = areas_map.value(doc_uuid, nullptr);
     if (area_group) area_group->remove_area(area_uuid);
+}
+
+void PropertiesController::update_area_struct(const QString &doc_uuid, const QString &area_uuid,
+                                       const area::area_t &area_struct) {
+    auto *area_group = areas_map.value(doc_uuid, nullptr);
+    if (area_group) area_group->update_area_struct(area_uuid, area_struct);
 }

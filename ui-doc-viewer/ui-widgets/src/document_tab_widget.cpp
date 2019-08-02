@@ -32,6 +32,7 @@ DocTabWidget::DocTabWidget(const QString &uuid, QWidget *parent, Qt::WindowFlags
 
     connect(doc_renderer, &DocumentRenderer::create_new_area, this, &DocTabWidget::create_new_area);
     connect(doc_renderer, &DocumentRenderer::remove_area, this, &DocTabWidget::remove_area);
+    connect(doc_renderer, &DocumentRenderer::update_area_struct, this, &DocTabWidget::update_area_struct);
 
     vertical_layout_content->addWidget(doc_renderer, Qt::AlignHCenter);
 
