@@ -6,7 +6,10 @@
 #define DOC_VIEWER_DOCUMENT_TAB_VIEW_WIDGET_H
 
 #include <QTabWidget>
+#include <QApplication>
+
 #include "document_tab_widget.h"
+#include "types_utils.h"
 
 
 namespace qview {
@@ -15,23 +18,28 @@ namespace qview {
     Q_OBJECT
 
     public:
-        explicit DocTabViewWidget(QWidget *parent = nullptr) : QTabWidget(parent) {
-            setUsesScrollButtons(true);
-            setTabsClosable(true);
-            setMovable(true);
-            setDocumentMode(true);
-        };
+        explicit DocTabViewWidget(QWidget *parent = nullptr);
 
     public slots:
 
-        void create_new_tab(const QString &tab_name) {};
+        void create_new_tab(const QString &tab_name, const QString &uuid);
 
-        void rendering_image(const QImage &image) {
-            auto *tab = (DocTabWidget *) currentWidget();
-            if (!tab) return;
+        void rendering_image(const QImage &image);
 
-            tab->get_renderer()->set_document_pixmap(image);
-        };
+        void update_area_uuid(const QString &area_uuid);
+
+        void create_new_area(const area::area_t &area);
+
+        void remove_area(const QString &area_uuid);
+
+    signals:
+        void inquiry_for_page_image(const QString &uuid, int page);
+
+        void send_new_area(const QString &doc_uuid, const area::area_t &area);
+
+        void send_remove_area(const QString &doc_uuid, const QString &area_uuid);
+
+
     };
 
 }

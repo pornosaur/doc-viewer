@@ -11,8 +11,6 @@
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
 
-    qview::DocumentRenderer g;
-
     MainWindow w;
     w.show();
 

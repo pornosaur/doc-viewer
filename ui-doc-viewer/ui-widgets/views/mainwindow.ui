@@ -190,7 +190,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="combo_box_area_type">
+           <widget class="qview::ComboBoxAreaType" name="combo_box_area_type">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -202,26 +202,6 @@
               <pointsize>10</pointsize>
              </font>
             </property>
-            <item>
-             <property name="text">
-              <string>Text</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Image</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Logo</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Sync.</string>
-             </property>
-            </item>
            </widget>
           </item>
          </layout>
@@ -286,28 +266,6 @@
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="check_box_ocr">
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>OCR</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QCheckBox" name="check_box_extract">
             <property name="maximumSize">
@@ -365,6 +323,28 @@
             </property>
             <property name="checkable">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="check_box_ocr">
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>OCR</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -481,7 +461,7 @@
          </widget>
          <widget class="QToolBox" name="tool_box_property">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -743,6 +723,11 @@
    <extends>QTabWidget</extends>
    <header>document_tab_view_widget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>qview::ComboBoxAreaType</class>
+   <extends>QComboBox</extends>
+   <header>combo_box_area_type.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -8,6 +8,7 @@
 #include <QGraphicsPixmapItem>
 #include <QAbstractItemModel>
 #include <QtWidgets/QGraphicsView>
+#include <QImage>
 #include <opencv4/opencv2/opencv.hpp>
 
 namespace qmodel {
@@ -16,16 +17,24 @@ namespace qmodel {
     Q_OBJECT
 
     private:
+        QString internal_uuid;
         QString doc_path;
 
+        QImage doc_img; //TODO: Temporary solution for Thomas
+
+        size_t total_pages = 0; //TODO: Temporary solution for Thomas
+
     public:
-        Document() = default;
+        explicit Document(QString file_path);
 
         ~Document() = default;
 
-    signals:
+        inline QString get_internal_uuid() const { return internal_uuid; }
 
-        /* signals here */
+        inline size_t get_total_pages() const { return total_pages; }
+
+        QImage get_page_image(int page);
+
 
     };
 

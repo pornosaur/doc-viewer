@@ -6,7 +6,7 @@
 
 using namespace qview;
 
-DocTabWidget::DocTabWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f) {
+DocTabWidget::DocTabWidget(const QString &uuid, QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f) {
     setObjectName(QStringLiteral("doc_tab"));
 
     vertical_layout = new QHBoxLayout(this);
@@ -27,11 +27,21 @@ DocTabWidget::DocTabWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent,
     vertical_layout_content->setObjectName(QStringLiteral("vertical_layout_content"));
     vertical_layout_content->setContentsMargins(0, 0, 0, 0);
 
-    doc_renderer = new DocumentRenderer(scroll_area_doc_content);
+    doc_renderer = new DocumentRenderer(uuid, scroll_area_doc_content);
     doc_renderer->setObjectName(QStringLiteral("graphics_view_doc_renderer"));
+
+    connect(doc_renderer, &DocumentRenderer::create_new_area, this, &DocTabWidget::create_new_area);
+    connect(doc_renderer, &DocumentRenderer::remove_area, this, &DocTabWidget::remove_area);
 
     vertical_layout_content->addWidget(doc_renderer, Qt::AlignHCenter);
 
     scroll_area_doc->setWidget(scroll_area_doc_content);
     vertical_layout->addWidget(scroll_area_doc, Qt::AlignHCenter);
+}
+
+DocTabWidget::~DocTabWidget() {
+    disconnect(doc_renderer, &DocumentRenderer::create_new_area, this, &DocTabWidget::create_new_area);
+    disconnect(doc_renderer, &DocumentRenderer::remove_area, this, &DocTabWidget::remove_area);
+
+    delete doc_renderer;
 }

@@ -10,7 +10,7 @@
 
 using namespace qview;
 
-DocumentRenderer::DocumentRenderer(QWidget *parent) : QGraphicsView(parent) {
+DocumentRenderer::DocumentRenderer(const QString &uuid, QWidget *parent) : QGraphicsView(parent) {
     setMouseTracking(true);
     setStyleSheet("background-color: rgba(255, 255, 255, 0.1);");
 
@@ -20,6 +20,14 @@ DocumentRenderer::DocumentRenderer(QWidget *parent) : QGraphicsView(parent) {
     doc_pixmap = new QGraphicsPixmapItem();
     _scene->addItem(doc_pixmap);
 
+    internal_id = uuid;
+    adding_area = false;
+}
+
+void DocumentRenderer::set_current_area_uuid(const QString &ara_uuid) {
+    if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
+        area->set_uuid(ara_uuid);
+    }
 }
 
 void DocumentRenderer::add_template_area(const QPointF &pos) {
@@ -28,6 +36,18 @@ void DocumentRenderer::add_template_area(const QPointF &pos) {
 
     template_area->setForceResizing(true);
     template_area->setSelected(true);
+    template_area->setFocus();
+
+    emit create_new_area(area::area_t());
+}
+
+void DocumentRenderer::remove_template_area() {
+    if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
+        scene()->removeItem(area);
+        emit remove_area(area->get_uuid());
+
+        delete area;
+    }
 }
 
 void DocumentRenderer::set_document_pixmap(const QImage &image) {
@@ -64,5 +84,13 @@ void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
     }
 
     QGraphicsView::mouseReleaseEvent(ev);
+}
+
+void DocumentRenderer::keyPressEvent(QKeyEvent *event) {
+    QGraphicsView::keyPressEvent(event);
+
+    if (event->key() == Qt::Key_Delete) {
+        remove_template_area();
+    }
 }
 

@@ -8,6 +8,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QDataWidgetMapper>
 #include <QtWidgets/QGraphicsPixmapItem>
+#include <controllers/include/properties_controller.h>
 
 #include "Observable.h"
 #include "document_controller.h"
@@ -33,14 +34,9 @@ private:
 
     /* Controllers */
     qcontroller::DocController *doc_controller;
+    qcontroller::PropertiesController *prop_controller;
 
 
-public slots:
-
-
-    void received_image(const QImage &image);
-
-signals:
 
 };
 

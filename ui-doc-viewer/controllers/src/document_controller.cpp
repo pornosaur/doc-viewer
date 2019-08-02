@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <utility>
+
 #include "document_controller.h"
 
 using namespace qcontroller;
@@ -15,12 +17,24 @@ void DocController::update(void *data) {
     //TODO: update smth
 }
 
+QString DocController::create_document(const QString &file_path) {
+    auto *doc = new qmodel::Document(file_path);
+    documents_map.insert(doc->get_internal_uuid(), doc);
+
+    return doc->get_internal_uuid();
+}
+
 void DocController::load_document() {
-    //TODO: loading doc. from file here
-    QString file_name = QFileDialog::getOpenFileName(nullptr, "Document");
+    const QString file_path = QFileDialog::getOpenFileName(nullptr, "Choose document file");
+    const QString uuid = create_document(file_path);
 
-    std::cout << file_name.toStdString() << std::endl;
+    emit document_changed(file_path, uuid);
+}
 
-    QImage img(file_name);
-    emit document_changed(img);
+void DocController::convert_to_qimage(const QString &uuid, int page) {
+    auto *doc = documents_map.value(uuid);
+
+    QImage p_image = doc->get_page_image(page);
+
+    emit respond_qimage(p_image);
 }

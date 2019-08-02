@@ -148,11 +148,3 @@ QVariant TemplateRect::itemChange(GraphicsItemChange change, const QVariant &val
 
     return QGraphicsItem::itemChange(change, value);
 }
-
-void TemplateRect::keyPressEvent(QKeyEvent *event) {
-    QGraphicsItem::keyPressEvent(event);
-
-    if (event->key() == Qt::Key_Delete) {
-        remove_rect_from_scene();
-    }
-}

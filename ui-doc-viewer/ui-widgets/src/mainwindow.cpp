@@ -11,6 +11,7 @@
 #include "document_tab_widget.h"
 #include "document_page_property.h"
 #include "pagination_widget.h"
+#include <document_tab_view_widget.h>
 #include "tool_box_page_area.h"
 
 
@@ -20,13 +21,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QMetaObject::connectSlotsByName(this);
 
     doc_controller = new qcontroller::DocController();
-    subscribe(doc_controller);
+    prop_controller = new qcontroller::PropertiesController();
 
-    //TODO: Creating new tab like this
-    auto *tab1 = new qview::DocTabWidget();
-    ui->tab_widget_doc->addTab(tab1, QString());
-    ui->tab_widget_doc->setTabText(ui->tab_widget_doc->indexOf(tab1),
-                                   QApplication::translate("MainWindow", "Tab 1", Q_NULLPTR));
 
     //TODO: Creating page property like this
     auto *page1 = new qview::ToolBoxPageArea();
@@ -49,16 +45,22 @@ MainWindow::~MainWindow() {
 void MainWindow::connect_signals() {
     /* ui connections */
     connect(ui->action_load_document, SIGNAL(triggered()), doc_controller, SLOT(load_document()));
-    connect(doc_controller, SIGNAL(document_changed(
-                                           const QImage & )), ui->tab_widget_doc, SLOT(rendering_image(
-                                                                                               const QImage &)));
+    connect(doc_controller, &qcontroller::DocController::document_changed, ui->tab_widget_doc,
+            &qview::DocTabViewWidget::create_new_tab);
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::inquiry_for_page_image, doc_controller,
+            &qcontroller::DocController::convert_to_qimage);
+    connect(doc_controller, &qcontroller::DocController::respond_qimage, ui->tab_widget_doc,
+            &qview::DocTabViewWidget::rendering_image);
 
-    //    connect(this, SIGNAL())
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, prop_controller,
+            &qcontroller::PropertiesController::add_area);
+    connect(prop_controller, &qcontroller::PropertiesController::send_area_uuid, ui->tab_widget_doc,
+            &qview::DocTabViewWidget::update_area_uuid);
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_remove_area, prop_controller,
+            &qcontroller::PropertiesController::remove_area);
+
 }
 
-void MainWindow::received_image(const QImage &image) {
-
-}
 
 void MainWindow::mousePressEvent(QMouseEvent *ev) {
     QMainWindow::mousePressEvent(ev);

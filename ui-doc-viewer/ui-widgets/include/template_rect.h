@@ -20,6 +20,8 @@ namespace qview {
     class TemplateRect : public QGraphicsRectItem {
 
     private:
+        QString _uuid;
+
         bool contains = false, resizing = false, force_resizing = false;
 
         static QPen selected_pen, unselected_pen;
@@ -48,7 +50,6 @@ namespace qview {
 
         QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
-        void keyPressEvent(QKeyEvent *event) override;
 
     public:
         explicit TemplateRect(const QRectF &rect, QGraphicsItem *parent = nullptr);
@@ -56,6 +57,10 @@ namespace qview {
         TemplateRect(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
 
         void setForceResizing(bool flag = true);
+
+        inline QString get_uuid() const { return _uuid; }
+
+        inline void set_uuid(const QString &uuid) { _uuid = uuid; }
 
     };
 

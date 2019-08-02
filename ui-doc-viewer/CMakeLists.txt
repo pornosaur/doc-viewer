@@ -26,9 +26,11 @@ set(SOURCE
 
         # MODELS
         models/src/document.cpp
+        models/src/area.cpp
 
         # CONTROLLERS
         controllers/src/document_controller.cpp
+        controllers/src/properties_controller.cpp
 
         # WIDGETS
         ui-widgets/src/mainwindow.cpp
@@ -39,6 +41,7 @@ set(SOURCE
         ui-widgets/src/template_rect.cpp
         ui-widgets/src/pagination_widget.cpp
         ui-widgets/src/tool_box_page_area.cpp
+        ui-widgets/src/combo_box_area_type.cpp
 
         # MAIN
         main.cpp
@@ -48,12 +51,15 @@ set(INCLUDE
         # UTILS
         utils/include/Observer.h
         utils/include/Observable.h
+        utils/include/types_utils.h
 
         # MODELS
         models/include/document.h
+        models/include/area.h
 
         #CONTROLLERS
         controllers/include/document_controller.h
+        controllers/include/properties_controller.h
 
         # WIDGETS
         ui-widgets/include/mainwindow.h
@@ -64,6 +70,7 @@ set(INCLUDE
         ui-widgets/include/template_rect.h
         ui-widgets/include/pagination_widget.h
         ui-widgets/include/tool_box_page_area.h
+        ui-widgets/include/combo_box_area_type.h
 
         )
 
