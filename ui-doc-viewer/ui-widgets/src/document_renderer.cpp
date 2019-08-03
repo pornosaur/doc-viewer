@@ -38,7 +38,7 @@ void DocumentRenderer::add_template_area(const QPointF &pos) {
     template_area->setSelected(true);
     template_area->setFocus();
 
-    emit create_new_area(area::area_t());
+    emit create_new_area(area::area_t(pos.x(), pos.y()));
 }
 
 void DocumentRenderer::remove_template_area() {
@@ -80,11 +80,21 @@ void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
         add_template_area(mapToScene(ev->pos()));
         adding_area = true;
         QGraphicsView::mousePressEvent(ev);
+    } else if (scene()->focusItem()) {
+        auto *area = (TemplateRect *) scene()->focusItem();
+        area->set_changed(true);
+
+        update_template_area(area);
     }
 
 }
 
 void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
+    if (!adding_area && scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
+        update_template_area(area);
+    }
+
+
     if (adding_area) {
         if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
             area->setForceResizing(false);
@@ -93,10 +103,6 @@ void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
         adding_area = false;
     }
 
-
-    if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
-        update_template_area(area);
-    }
 
     QGraphicsView::mouseReleaseEvent(ev);
 }

@@ -36,7 +36,9 @@ namespace qcontroller {
 
     signals:
 
-        void send_area_uuid(const QString &area_uuid);
+        void send_area_uuid(const QString &area_uuid, const area::area_t &area_struct);
+
+
     };
 
 }

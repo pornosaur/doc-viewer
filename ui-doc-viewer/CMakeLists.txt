@@ -31,6 +31,7 @@ set(SOURCE
         # CONTROLLERS
         controllers/src/document_controller.cpp
         controllers/src/properties_controller.cpp
+        controllers/src/toolbox_controller.cpp
 
         # WIDGETS
         ui-widgets/src/mainwindow.cpp
@@ -60,6 +61,7 @@ set(INCLUDE
         #CONTROLLERS
         controllers/include/document_controller.h
         controllers/include/properties_controller.h
+        controllers/include/toolbox_controller.h
 
         # WIDGETS
         ui-widgets/include/mainwindow.h

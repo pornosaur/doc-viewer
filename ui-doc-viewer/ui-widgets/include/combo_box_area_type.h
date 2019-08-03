@@ -17,12 +17,14 @@ namespace qview {
         Q_OBJECT
         Q_ENUM(area::Type)
 
+    public:
+        explicit ComboBoxAreaType(QWidget *parent = nullptr);
 
     public slots:
         void changed_selected(int idx);
 
-    public:
-        explicit ComboBoxAreaType(QWidget *parent = nullptr);
+    signals:
+        void send_selection_setting(const area::tool_box_t &setting);
 
     };
 

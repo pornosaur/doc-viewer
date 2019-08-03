@@ -61,9 +61,10 @@ void DocTabViewWidget::rendering_image(const QImage &image) {
     tab->get_renderer()->set_document_pixmap(image);
 }
 
-void DocTabViewWidget::update_area_uuid(const QString &area_uuid) {
+void DocTabViewWidget::update_area_uuid(const QString &area_uuid, const area::area_t &area_struct) {
     auto *tab = (DocTabWidget *) currentWidget();
     if (!tab) return;
 
     tab->get_renderer()->set_current_area_uuid(area_uuid);
+    update_area_struct(area_uuid, area_struct);
 }

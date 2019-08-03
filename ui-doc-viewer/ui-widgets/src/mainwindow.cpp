@@ -11,7 +11,7 @@
 #include "document_tab_widget.h"
 #include "document_page_property.h"
 #include "pagination_widget.h"
-#include <document_tab_view_widget.h>
+#include "document_tab_view_widget.h"
 #include "tool_box_page_area.h"
 
 
@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     doc_controller = new qcontroller::DocController();
     prop_controller = new qcontroller::PropertiesController();
+    toolbox_controller = new qcontroller::ToolBoxController();
 
 
     //TODO: Creating page property like this
@@ -52,7 +53,11 @@ void MainWindow::connect_signals() {
     connect(doc_controller, &qcontroller::DocController::respond_qimage, ui->tab_widget_doc,
             &qview::DocTabViewWidget::rendering_image);
 
-    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, prop_controller,
+    /*connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, prop_controller,
+            &qcontroller::PropertiesController::add_area);*/
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, toolbox_controller,
+            &qcontroller::ToolBoxController::request_settings);
+    connect(toolbox_controller, &qcontroller::ToolBoxController::send_area, prop_controller,
             &qcontroller::PropertiesController::add_area);
     connect(prop_controller, &qcontroller::PropertiesController::send_area_uuid, ui->tab_widget_doc,
             &qview::DocTabViewWidget::update_area_uuid);
@@ -64,5 +69,7 @@ void MainWindow::connect_signals() {
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, tool_box_area_page,
             &qview::ToolBoxPageArea::update_area_properties);
 
+    connect(ui->combo_box_area_type, &qview::ComboBoxAreaType::send_selection_setting, toolbox_controller,
+            &qcontroller::ToolBoxController::update_settings);
 }
 

@@ -26,13 +26,15 @@ ComboBoxAreaType::ComboBoxAreaType(QWidget *parent) : QComboBox(parent) {
 
     area::Type it = area::Type::ITERATION_BEGIN;
     for (++it; it < area::Type::ITERATION_END; ++it) {
-        addItem(area::enum_to_str(it), QVariant::fromValue((int)it));
+        addItem(area::enum_to_str(it), QVariant::fromValue((int) it));
     }
 
     connect(this, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ComboBoxAreaType::changed_selected);
 }
 
 void ComboBoxAreaType::changed_selected(int idx) {
+    area::tool_box_t setting;
+    setting._type = static_cast<area::Type>(itemData(idx).toInt());
 
-    std::cout << "CHANGE SELECTED" << itemData(idx).toInt() << std::endl;
+    emit send_selection_setting(setting);
 }

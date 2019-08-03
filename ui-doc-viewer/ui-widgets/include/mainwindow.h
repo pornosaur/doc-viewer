@@ -9,6 +9,7 @@
 #include <QtWidgets/QDataWidgetMapper>
 #include <QtWidgets/QGraphicsPixmapItem>
 #include <controllers/include/properties_controller.h>
+#include <controllers/include/toolbox_controller.h>
 
 #include "Observable.h"
 #include "document_controller.h"
@@ -36,6 +37,7 @@ private:
     /* Controllers */
     qcontroller::DocController *doc_controller;
     qcontroller::PropertiesController *prop_controller;
+    qcontroller::ToolBoxController *toolbox_controller;
 
 
 };

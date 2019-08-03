@@ -35,6 +35,16 @@ namespace area {
         CLIPPING = 0x08
     };
 
+    Q_ENUM_NS(Actions)
+
+    struct tool_box_t {
+        Type _type;
+        Actions _actions;
+
+        explicit tool_box_t(Type type = Type::TRANSIENT, Actions actions = Actions::TRANSIENT) : _type(type),
+                                                                                                 _actions(actions) {}
+    };
+
     struct area_dimension_t {
         float _x, _y;
         float _w, _h;
@@ -49,17 +59,24 @@ namespace area {
     };
 
     struct area_t {
+        bool read_only;
         std::string name;
         Type type;
         Actions actions;
         area_dimension_t dimension;
         size_t page;
 
-        area_t(std::string _name, Type _type, Actions _actions, area_dimension_t dim, size_t _page) :
-                name(std::move(_name)), type(_type), actions(_actions), dimension(dim), page(_page) {}
+        area_t(bool _ro, std::string _name, Type _type, Actions _actions, area_dimension_t dim, size_t _page)
+                : read_only(_ro), name(std::move(_name)), type(_type), actions(_actions), dimension(dim), page(_page) {}
 
-        area_t() : area_t("", Type::TRANSIENT, Actions::TRANSIENT, area_dimension_t(), 0) {}
+        area_t(qreal x, qreal y) : area_t(false, "", Type::TRANSIENT, Actions::TRANSIENT, area_dimension_t(x, y), 0) {}
 
+        area_t() : area_t(false, "", Type::TRANSIENT, Actions::TRANSIENT, area_dimension_t(), 0) {}
+
+
+        inline int type_index() const {
+            return (static_cast<int>(type) - (static_cast<int>(Type::ITERATION_BEGIN) + 1));
+        }
     };
 
     template<typename T>
@@ -105,7 +122,8 @@ namespace std {
     };
 }
 
-
 Q_DECLARE_METATYPE(area::Type)
+
+Q_DECLARE_METATYPE(area::Actions)
 
 #endif //DOC_VIEWER_TYPES_UTILS_H

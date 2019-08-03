@@ -26,10 +26,8 @@ void PropertiesController::add_area(const QString &doc_uuid, const area::area_t 
         areas_map.insert(doc_uuid, area_group);
     }
 
-    //TODO: create AreaGroup while new tab was opened!
-
     auto area_uuid = area_group->create_area_uuid(area_struct);
-    emit send_area_uuid(area_uuid);
+    emit send_area_uuid(area_uuid, area_struct);
 }
 
 void PropertiesController::remove_area(const QString &doc_uuid, const QString &area_uuid) {
@@ -38,7 +36,9 @@ void PropertiesController::remove_area(const QString &doc_uuid, const QString &a
 }
 
 void PropertiesController::update_area_struct(const QString &doc_uuid, const QString &area_uuid,
-                                       const area::area_t &area_struct) {
+                                              const area::area_t &area_struct) {
+    if (area_struct.read_only) return;
+
     auto *area_group = areas_map.value(doc_uuid, nullptr);
     if (area_group) area_group->update_area_struct(area_uuid, area_struct);
 }
