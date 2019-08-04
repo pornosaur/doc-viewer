@@ -39,7 +39,7 @@ namespace qview {
 
     public slots:
 
-        void update_area_properties(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area);
+        void update_area_properties(const area::area_t &area);
 
 
     };

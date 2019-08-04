@@ -28,7 +28,7 @@ namespace qmodel {
 
         inline area::area_t get_area_struct() const { return _area_struct; }
 
-        void set_area_struct(const area::area_t &area_struct);
+        area::area_t set_area_struct(const area::area_t &area_struct);
     };
 
 
@@ -49,7 +49,7 @@ namespace qmodel {
 
         void remove_area(const QString &area_uuid);
 
-        void update_area_struct(const QString &area_uuid, const area::area_t &area_struct);
+        bool update_area_struct(const QString &area_uuid, area::area_t &area_struct);
     };
 }
 

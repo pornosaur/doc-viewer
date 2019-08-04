@@ -21,11 +21,15 @@ Area::Area(area::area_t area_struct, QString area_uuid) : _area_struct(std::move
 
 }
 
-void Area::set_area_struct(const area::area_t &area_struct) {
-    _area_struct.dimension = area_struct.dimension.was_set ? area_struct.dimension : _area_struct.dimension;
-    _area_struct.actions = area_struct.actions == area::Actions::TRANSIENT ? _area_struct.actions : area_struct.actions;
-    _area_struct.page = area_struct.page == 0 ? _area_struct.page : area_struct.page;
-    _area_struct.name = area_struct.name.empty() ? _area_struct.name : area_struct.name;
+area::area_t Area::set_area_struct(const area::area_t &area_struct) {
+    if (!area_struct.read_only) {
+        _area_struct.dimension = area_struct.dimension.was_set ? area_struct.dimension : _area_struct.dimension;
+        _area_struct.actions =
+                area_struct.actions == area::Actions::TRANSIENT ? _area_struct.actions : area_struct.actions;
+        _area_struct.page = area_struct.page == 0 ? _area_struct.page : area_struct.page;
+        _area_struct.name = area_struct.name.empty() ? _area_struct.name : area_struct.name;
+    }
+    return _area_struct;
 }
 
 //-------------------------------------
@@ -57,9 +61,14 @@ void AreaGroup::remove_area(const QString &area_uuid) {
     delete area;
 }
 
-void AreaGroup::update_area_struct(const QString &area_uuid, const area::area_t &area_struct) {
+bool AreaGroup::update_area_struct(const QString &area_uuid, area::area_t &area_struct) {
     auto *area = areas_map.value(area_uuid, nullptr);
-    if (area) area->set_area_struct(area_struct);
+    if (area) {
+        area_struct = area->set_area_struct(area_struct);
+        return true;
+    }
+
+    return false;
 }
 
 //-------------------------------------

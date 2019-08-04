@@ -53,12 +53,11 @@ void MainWindow::connect_signals() {
     connect(doc_controller, &qcontroller::DocController::respond_qimage, ui->tab_widget_doc,
             &qview::DocTabViewWidget::rendering_image);
 
-    /*connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, prop_controller,
-            &qcontroller::PropertiesController::add_area);*/
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, toolbox_controller,
             &qcontroller::ToolBoxController::request_settings);
     connect(toolbox_controller, &qcontroller::ToolBoxController::send_area, prop_controller,
             &qcontroller::PropertiesController::add_area);
+
     connect(prop_controller, &qcontroller::PropertiesController::send_area_uuid, ui->tab_widget_doc,
             &qview::DocTabViewWidget::update_area_uuid);
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_remove_area, prop_controller,
@@ -66,7 +65,7 @@ void MainWindow::connect_signals() {
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, prop_controller,
             &qcontroller::PropertiesController::update_area_struct);
 
-    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, tool_box_area_page,
+    connect(prop_controller, &qcontroller::PropertiesController::send_updated_area, tool_box_area_page,
             &qview::ToolBoxPageArea::update_area_properties);
 
     connect(ui->combo_box_area_type, &qview::ComboBoxAreaType::send_selection_setting, toolbox_controller,

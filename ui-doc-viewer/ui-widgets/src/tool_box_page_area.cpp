@@ -198,17 +198,14 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
 }
 
 void
-ToolBoxPageArea::update_area_properties(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area) {
-    line_edit_name->setText(area.name.empty() ? line_edit_name->text() : QString(area.name.c_str()));
-    combo_box_type->setCurrentIndex(
-            area.type == area::Type::TRANSIENT ? combo_box_type->currentIndex() : area.type_index());
-    label_page_num->setText(area.page == 0 ? label_page_num->text() : std::to_string(area.page).c_str());
+ToolBoxPageArea::update_area_properties(const area::area_t &area) {
+    line_edit_name->setText(area.name.c_str());
+    combo_box_type->setCurrentIndex(area.type_index());
+    label_page_num->setText(std::to_string(area.page).c_str());
 
-    if (area.actions != area::Actions::TRANSIENT) {
-        check_box_ocr->setChecked(area::is_action_set(area.actions, area::Actions::OCR));
-        check_box_conceal->setChecked(area::is_action_set(area.actions, area::Actions::CONCEAL));
-        check_box_extract->setChecked(area::is_action_set(area.actions, area::Actions::EXTRACT));
-    }
+    check_box_ocr->setChecked(area::is_action_set(area.actions, area::Actions::OCR));
+    check_box_conceal->setChecked(area::is_action_set(area.actions, area::Actions::CONCEAL));
+    check_box_extract->setChecked(area::is_action_set(area.actions, area::Actions::EXTRACT));
 
     line_edit_x->setText(std::to_string((int) area.dimension._x).c_str());
     line_edit_y->setText(std::to_string((int) area.dimension._y).c_str());

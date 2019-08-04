@@ -37,8 +37,10 @@ void PropertiesController::remove_area(const QString &doc_uuid, const QString &a
 
 void PropertiesController::update_area_struct(const QString &doc_uuid, const QString &area_uuid,
                                               const area::area_t &area_struct) {
-    if (area_struct.read_only) return;
-
     auto *area_group = areas_map.value(doc_uuid, nullptr);
-    if (area_group) area_group->update_area_struct(area_uuid, area_struct);
+
+    bool updated = false;
+    area::area_t _area_struct = area_struct;
+    if (area_group) updated = area_group->update_area_struct(area_uuid, _area_struct);
+    if (updated) emit send_updated_area(_area_struct);
 }
