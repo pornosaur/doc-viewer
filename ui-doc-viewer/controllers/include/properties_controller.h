@@ -19,12 +19,16 @@ namespace qcontroller {
     private:
         QMap<QString, qmodel::AreaGroup *> areas_map;
 
+        static QString current_area_uuid, current_doc_uuid;
+
     public:
         PropertiesController();
 
         ~PropertiesController();
 
         void update(void *data) override {};
+
+        static void set_current_selected_area(const QString &doc_uuid, const QString &area_uuid);
 
     public slots:
 
@@ -34,11 +38,13 @@ namespace qcontroller {
 
         void update_area_struct(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area_struct);
 
+        void update_area_struct(const area::area_t &area_struct);
+
     signals:
 
         void send_area_uuid(const QString &area_uuid, const area::area_t &area_struct);
 
-        void send_updated_area(const area::area_t &area_struct);
+        void send_updated_area(const QString &area_uuid, const area::area_t &area_struct);
 
 
     };

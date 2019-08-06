@@ -63,7 +63,8 @@ void MainWindow::connect_signals() {
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_remove_area, prop_controller,
             &qcontroller::PropertiesController::remove_area);
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, prop_controller,
-            &qcontroller::PropertiesController::update_area_struct);
+            QOverload<const QString &, const QString &, const area::area_t &>::of(
+                    &qcontroller::PropertiesController::update_area_struct));
 
     connect(prop_controller, &qcontroller::PropertiesController::send_updated_area, tool_box_area_page,
             &qview::ToolBoxPageArea::update_area_properties);
@@ -73,5 +74,8 @@ void MainWindow::connect_signals() {
 
     connect(ui->group_box_area_actions, &qview::GroupBoxAreaActions::send_area_actions_changes, toolbox_controller,
             &qcontroller::ToolBoxController::update_settings);
+
+    connect(tool_box_area_page, &qview::ToolBoxPageArea::send_update_area_properties, prop_controller,
+            QOverload<const area::area_t &>::of(&qcontroller::PropertiesController::update_area_struct));
 }
 

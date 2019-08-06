@@ -195,10 +195,47 @@ ToolBoxPageArea::ToolBoxPageArea(QWidget *parent, Qt::WindowFlags f) : QWidget(p
     check_box_ocr->setText(QApplication::translate("MainWindow", "OCR", Q_NULLPTR));
     check_box_conceal->setText(QApplication::translate("MainWindow", "Conceal", Q_NULLPTR));
     check_box_extract->setText(QApplication::translate("MainWindow", "Extract", Q_NULLPTR));
+
+    set_signal_connections();
 }
 
-void
-ToolBoxPageArea::update_area_properties(const area::area_t &area) {
+void ToolBoxPageArea::set_signal_connections() {
+    connect(line_edit_name, &QLineEdit::textEdited, this, &ToolBoxPageArea::name_text_changed);
+    connect(combo_box_type, &ComboBoxAreaType::send_selection_setting, this, &ToolBoxPageArea::combo_box_changed);
+
+    connect(check_box_conceal, &QCheckBox::stateChanged, this, &ToolBoxPageArea::area_actions_changed);
+    connect(check_box_ocr, &QCheckBox::stateChanged, this, &ToolBoxPageArea::area_actions_changed);
+    connect(check_box_extract, &QCheckBox::stateChanged, this, &ToolBoxPageArea::area_actions_changed);
+
+    connect(combo_box_type, &ComboBoxAreaType::send_selection_setting, this, &ToolBoxPageArea::combo_box_changed);
+}
+
+void ToolBoxPageArea::name_text_changed(const QString &text) {
+    area::area_t area;
+    area.name = text.toStdString();
+
+    emit send_update_area_properties(area);
+}
+
+void ToolBoxPageArea::combo_box_changed(const area::tool_box_t &settings) {
+    area::area_t area;
+    area.actions = settings._actions;
+    area.type = settings._type;
+
+    emit send_update_area_properties(area);
+}
+
+void ToolBoxPageArea::area_actions_changed(int state) {
+    area::area_t area;
+
+    if (check_box_extract->isChecked()) area.actions |= area::Actions::EXTRACT;
+    if (check_box_ocr->isChecked()) area.actions |= area::Actions::OCR;
+    if (check_box_conceal->isChecked()) area.actions |= area::Actions::CONCEAL;
+
+    emit send_update_area_properties(area);
+}
+
+void ToolBoxPageArea::update_area_properties(const QString &area_uuid, const area::area_t &area) {
     line_edit_name->setText(area.name.c_str());
     combo_box_type->setCurrentIndex(area.type_index());
     label_page_num->setText(std::to_string(area.page).c_str());

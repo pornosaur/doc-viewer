@@ -33,14 +33,30 @@ namespace qview {
         QCheckBox *check_box_ocr, *check_box_conceal, *check_box_extract;
         ComboBoxAreaType *combo_box_type;
 
+        void set_signal_connections();
+
+    private slots:
+
+        void name_text_changed(const QString &text);
+
+        void combo_box_changed(const area::tool_box_t &settings);
+
+        void area_actions_changed(int state);
 
     public:
         explicit ToolBoxPageArea(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
+
     public slots:
 
-        void update_area_properties(const area::area_t &area);
+        void update_area_properties(const QString &area_uuid, const area::area_t &area);
 
+        //void set_area_properties();
+
+    signals:
+
+        //TODO: current set area move to controller!!!
+        void send_update_area_properties(const area::area_t &area);
 
     };
 
