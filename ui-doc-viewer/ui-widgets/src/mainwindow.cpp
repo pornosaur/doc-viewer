@@ -70,5 +70,8 @@ void MainWindow::connect_signals() {
 
     connect(ui->combo_box_area_type, &qview::ComboBoxAreaType::send_selection_setting, toolbox_controller,
             &qcontroller::ToolBoxController::update_settings);
+
+    connect(ui->group_box_area_actions, &qview::GroupBoxAreaActions::send_area_actions_changes, toolbox_controller,
+            &qcontroller::ToolBoxController::update_settings);
 }
 

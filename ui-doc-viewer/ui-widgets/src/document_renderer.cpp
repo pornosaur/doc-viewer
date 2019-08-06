@@ -69,8 +69,6 @@ void DocumentRenderer::set_document_pixmap(const QImage &image) {
 
     setMaximumWidth(image.width() + parentWidget()->style()->pixelMetric(QStyle::PM_ScrollBarExtent));
     setMinimumWidth(0);
-
-    _scene->addItem(new TemplateRect(0, 0, 300, 300));
 }
 
 void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
@@ -86,14 +84,12 @@ void DocumentRenderer::mousePressEvent(QMouseEvent *ev) {
 
         update_template_area(area);
     }
-
 }
 
 void DocumentRenderer::mouseReleaseEvent(QMouseEvent *ev) {
     if (!adding_area && scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {
         update_template_area(area);
     }
-
 
     if (adding_area) {
         if (scene()->focusItem(); auto *area = ((TemplateRect *) scene()->focusItem())) {

@@ -12,7 +12,9 @@ ToolBoxController::ToolBoxController() {
 }
 
 void ToolBoxController::update_settings(const area::tool_box_t &settings) {
-    current_settings = settings;
+    current_settings._actions =
+            settings._actions == area::Actions::TRANSIENT ? current_settings._actions : settings._actions;
+    current_settings._type = settings._type == area::Type::TRANSIENT ? current_settings._type : settings._type;
 }
 
 void ToolBoxController::request_settings(const QString &doc_uuid, const area::area_t &area_struct) {

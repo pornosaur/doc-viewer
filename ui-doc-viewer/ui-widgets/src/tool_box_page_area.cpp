@@ -211,5 +211,4 @@ ToolBoxPageArea::update_area_properties(const area::area_t &area) {
     line_edit_y->setText(std::to_string((int) area.dimension._y).c_str());
     line_edit_width->setText(std::to_string((int) area.dimension._w).c_str());
     line_edit_height->setText(std::to_string((int) area.dimension._h).c_str());
-
 }

@@ -46,7 +46,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QWidget" name="horizontal_layout_tools" native="true">
+     <widget class="QWidget" name="horizontal_layout_tools_w" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -71,7 +71,7 @@
       <property name="autoFillBackground">
        <bool>false</bool>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0">
+      <layout class="QHBoxLayout" name="horizontal_layout_tools" stretch="0,0,0,0">
        <property name="spacing">
         <number>1</number>
        </property>
@@ -215,7 +215,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="group_box_area_actions">
+        <widget class="qview::GroupBoxAreaActions" name="group_box_area_actions">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -250,105 +250,6 @@
          <property name="flat">
           <bool>false</bool>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>5</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item row="0" column="1">
-           <widget class="QCheckBox" name="check_box_extract">
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Extract</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="check_box_conceal">
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Conceal</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="check_box_clipping">
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Clipping</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="check_box_ocr">
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>OCR</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
        <item>
@@ -447,7 +348,7 @@
            </size>
           </property>
           <property name="toolTip">
-           <string> </string>
+           <string/>
           </property>
           <property name="tabPosition">
            <enum>QTabWidget::North</enum>
@@ -492,8 +393,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>120</width>
-             <height>339</height>
+             <width>176</width>
+             <height>327</height>
             </rect>
            </property>
            <property name="sizePolicy">
@@ -728,6 +629,12 @@
    <class>qview::ComboBoxAreaType</class>
    <extends>QComboBox</extends>
    <header>combo_box_area_type.h</header>
+  </customwidget>
+  <customwidget>
+   <class>qview::GroupBoxAreaActions</class>
+   <extends>QGroupBox</extends>
+   <header>group_box_area_actions.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

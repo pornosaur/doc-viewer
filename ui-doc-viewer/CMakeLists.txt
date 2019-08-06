@@ -43,6 +43,7 @@ set(SOURCE
         ui-widgets/src/pagination_widget.cpp
         ui-widgets/src/tool_box_page_area.cpp
         ui-widgets/src/combo_box_area_type.cpp
+        ui-widgets/src/group_box_area_actoins.cpp
 
         # MAIN
         main.cpp
@@ -73,6 +74,7 @@ set(INCLUDE
         ui-widgets/include/pagination_widget.h
         ui-widgets/include/tool_box_page_area.h
         ui-widgets/include/combo_box_area_type.h
+        ui-widgets/include/group_box_area_actions.h
 
         )
 
