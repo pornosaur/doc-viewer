@@ -9,7 +9,10 @@
 #include <QAbstractItemModel>
 #include <QtWidgets/QGraphicsView>
 #include <QImage>
-#include <opencv4/opencv2/opencv.hpp>
+
+#include <jsoncpp/json/json.h>
+
+#include "types_utils.h"
 
 namespace qmodel {
 
@@ -18,11 +21,12 @@ namespace qmodel {
 
     private:
         QString internal_uuid;
-        QString doc_path;
+
+        QString doc_id, doc_path, doc_name;
 
         QImage doc_img; //TODO: Temporary solution for Thomas
 
-        size_t total_pages = 0; //TODO: Temporary solution for Thomas
+        size_t total_pages = 1; //TODO: Temporary solution for Thomas
 
     public:
         explicit Document(QString file_path);
@@ -35,6 +39,9 @@ namespace qmodel {
 
         QImage get_page_image(int page);
 
+        bool convert2json(Json::Value &doc_json);
+
+        void save_to_file(const stg::save_t &save_doc);
 
     };
 

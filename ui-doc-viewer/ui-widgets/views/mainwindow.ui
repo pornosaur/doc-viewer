@@ -588,8 +588,11 @@
      <string>File</string>
     </property>
     <addaction name="separator"/>
-    <addaction name="actionExit"/>
     <addaction name="separator"/>
+    <addaction name="action_save"/>
+    <addaction name="action_save_as"/>
+    <addaction name="separator"/>
+    <addaction name="action_exit"/>
    </widget>
    <widget class="QMenu" name="menu_doc">
     <property name="title">
@@ -602,7 +605,7 @@
    <addaction name="menu_doc"/>
   </widget>
   <widget class="QStatusBar" name="statusbar_info"/>
-  <action name="actionExit">
+  <action name="action_exit">
    <property name="text">
     <string>Exit</string>
    </property>
@@ -615,6 +618,16 @@
   <action name="action_load_document">
    <property name="text">
     <string>Load document</string>
+   </property>
+  </action>
+  <action name="action_save">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="action_save_as">
+   <property name="text">
+    <string>Save as...</string>
    </property>
   </action>
  </widget>

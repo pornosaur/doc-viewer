@@ -40,12 +40,15 @@ namespace qcontroller {
 
         void update_area_struct(const area::area_t &area_struct);
 
+        void save_template(const stg::save_t &json_data);
+
     signals:
 
         void send_area_uuid(const QString &area_uuid, const area::area_t &area_struct);
 
         void send_updated_area(const QString &area_uuid, const area::area_t &area_struct);
 
+        void send_save_request(const stg::save_t &json_data);
 
     };
 

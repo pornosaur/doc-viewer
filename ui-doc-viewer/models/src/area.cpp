@@ -1,9 +1,3 @@
-#include <utility>
-
-#include <utility>
-
-#include <utility>
-
 //
 // Created by pornosaur on 25.7.19.
 //
@@ -31,6 +25,21 @@ area::area_t Area::set_area_struct(const area::area_t &area_struct) {
         _area_struct.name = area_struct.name.empty() ? _area_struct.name : area_struct.name;
     }
     return _area_struct;
+}
+
+bool Area::convert2json(Json::Value &json_data) {
+    json_data = Json::Value(Json::objectValue);
+
+    json_data["name"] = _area_struct.name;
+    json_data["page"] = static_cast<int>(_area_struct.page);
+    json_data["type"] = _area_struct.get_type_str();
+    json_data["actions"] = _area_struct.get_actions_str();
+    json_data["dimension"]["x"] = _area_struct.dimension._x;
+    json_data["dimension"]["y"] = _area_struct.dimension._y;
+    json_data["dimension"]["w"] = _area_struct.dimension._w;
+    json_data["dimension"]["h"] = _area_struct.dimension._h;
+
+    return true;
 }
 
 //-------------------------------------
@@ -70,6 +79,16 @@ bool AreaGroup::update_area_struct(const QString &area_uuid, area::area_t &area_
     }
 
     return false;
+}
+
+bool AreaGroup::convert2json(Json::Value &json_data) {
+    json_data = Json::Value(Json::arrayValue);
+    for (const auto it : areas_map) {
+        Json::Value area_json;
+        if (it->convert2json(area_json)) json_data.append(area_json);
+    }
+
+    return true;
 }
 
 //-------------------------------------

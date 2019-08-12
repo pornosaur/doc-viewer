@@ -35,12 +35,13 @@ namespace qcontroller {
 
         void convert_to_qimage(const QString &uuid, int page);
 
+        void save_document_template(const stg::save_t &save_doc);
+
     signals:
 
         void document_changed(const QString &file_path, const QString &uuid);
 
         void respond_qimage(const QImage &p_image);
-
     };
 
 }

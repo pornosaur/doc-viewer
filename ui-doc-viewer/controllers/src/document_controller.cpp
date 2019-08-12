@@ -3,8 +3,6 @@
 //
 
 #include <iostream>
-#include <utility>
-
 #include "document_controller.h"
 
 using namespace qcontroller;
@@ -37,4 +35,17 @@ void DocController::convert_to_qimage(const QString &uuid, int page) {
     QImage p_image = doc->get_page_image(page);
 
     emit respond_qimage(p_image);
+}
+
+void DocController::save_document_template(const stg::save_t &save_doc) {
+    auto *doc = documents_map.value(save_doc.doc_uuid, nullptr);
+    if (!doc) return;
+
+    stg::save_t json = save_doc;
+    if (json.areas_json.empty()) {
+        //TODO: warning about empty areas!
+    }
+
+    doc->convert2json(json.doc_json);
+    doc->save_to_file(json);
 }

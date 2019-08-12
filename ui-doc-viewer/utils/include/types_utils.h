@@ -9,6 +9,8 @@
 #include <QMetaEnum>
 #include <QString>
 
+#include <jsoncpp/json/json.h>
+
 #include <string>
 #include <functional>
 
@@ -58,26 +60,6 @@ namespace area {
         area_dimension_t() : area_dimension_t(-1, -1) { was_set = false; }
     };
 
-    struct area_t {
-        bool read_only;
-        std::string name;
-        Type type;
-        Actions actions;
-        area_dimension_t dimension;
-        size_t page;
-
-        area_t(bool _ro, std::string _name, Type _type, Actions _actions, area_dimension_t dim, size_t _page)
-                : read_only(_ro), name(std::move(_name)), type(_type), actions(_actions), dimension(dim), page(_page) {}
-
-        area_t(qreal x, qreal y) : area_t(false, "", Type::TRANSIENT, Actions::TRANSIENT, area_dimension_t(x, y), 0) {}
-
-        area_t() : area_t(false, "", Type::TRANSIENT, Actions::TRANSIENT, area_dimension_t(), 0) {}
-
-
-        inline int type_index() const {
-            return (static_cast<int>(type) - (static_cast<int>(Type::ITERATION_BEGIN) + 1));
-        }
-    };
 
     template<typename T>
     inline T operator&(T lhs, T rhs) {
@@ -111,6 +93,55 @@ namespace area {
     inline bool is_action_set(const T &in, T test) {
         return ((in & test) == test);
     }
+
+    inline void append_str(std::string &str, const std::string &append) {
+        str = str.empty() ? append : str + "+" + append;
+    }
+
+    struct area_t {
+        bool read_only;
+        std::string name;
+        Type type;
+        Actions actions;
+        area_dimension_t dimension;
+        size_t page;
+
+        area_t(bool _ro, std::string _name, Type _type, Actions _actions, area_dimension_t dim, size_t _page)
+                : read_only(_ro), name(std::move(_name)), type(_type), actions(_actions), dimension(dim), page(_page) {}
+
+        area_t(qreal x, qreal y) : area_t(false, "", Type::TRANSIENT, Actions::TRANSIENT,
+                                          area_dimension_t(x, y), 0) {}
+
+        area_t() : area_t(false, "", Type::TRANSIENT, Actions::TRANSIENT,
+                          area_dimension_t(), 0) {}
+
+        [[nodiscard]]
+        inline int type_index() const {
+            return (static_cast<int>(type) - (static_cast<int>(Type::ITERATION_BEGIN) + 1));
+        }
+
+        inline std::string get_type_str() { return area::enum_to_str(type); }
+
+        std::string get_actions_str() {
+            std::string actions_str;
+
+            if (is_action_set(actions, Actions::OCR)) append_str(actions_str, "OCR");
+            if (is_action_set(actions, Actions::CONCEAL)) append_str(actions_str, "CONCEAL");
+            if (is_action_set(actions, Actions::EXTRACT)) append_str(actions_str, "EXTRACT");
+            if (is_action_set(actions, Actions::CLIPPING)) append_str(actions_str, "CLIPPING");
+
+            return actions_str;
+        }
+    };
+}
+
+namespace stg {
+
+    struct save_t {
+        QString path, doc_uuid;
+        Json::Value doc_json, areas_json;
+    };
+
 }
 
 namespace std {

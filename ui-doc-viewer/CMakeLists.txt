@@ -18,7 +18,7 @@ include_directories(
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 find_package( OpenCV REQUIRED )
 
-set(LIBS Qt5::Core Qt5::Gui Qt5::Widgets ${OpenCV_LIBS} stdc++fs)
+set(LIBS Qt5::Core Qt5::Gui Qt5::Widgets ${OpenCV_LIBS} stdc++fs jsoncpp)
 
 set(SOURCE
         # UTILS

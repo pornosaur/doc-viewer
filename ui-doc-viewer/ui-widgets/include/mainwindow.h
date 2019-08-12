@@ -39,6 +39,11 @@ private:
     qcontroller::PropertiesController *prop_controller;
     qcontroller::ToolBoxController *toolbox_controller;
 
+private slots:
+
+    void save_doc_template(bool checked);
+
+    void save_doc_template_as();
 
 };
 

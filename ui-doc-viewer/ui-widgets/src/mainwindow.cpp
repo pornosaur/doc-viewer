@@ -77,5 +77,36 @@ void MainWindow::connect_signals() {
 
     connect(tool_box_area_page, &qview::ToolBoxPageArea::send_update_area_properties, prop_controller,
             QOverload<const area::area_t &>::of(&qcontroller::PropertiesController::update_area_struct));
+
+    connect(ui->action_save, &QAction::triggered, this, &MainWindow::save_doc_template);
+    connect(ui->action_save_as, &QAction::triggered, this, &MainWindow::save_doc_template_as);
+
+    connect(prop_controller, &qcontroller::PropertiesController::send_save_request, doc_controller,
+            &qcontroller::DocController::save_document_template);
 }
 
+void MainWindow::save_doc_template(bool checked) {
+    QString path = "";
+    if (checked) {
+        QFileDialog dialog(this);
+        dialog.setOption(QFileDialog::ShowDirsOnly, true);
+        dialog.setFileMode(QFileDialog::DirectoryOnly);
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+
+        dialog.exec();
+        if (!dialog.selectedFiles().empty()) path = dialog.selectedFiles().at(0);
+    } else {
+        //TODO: default path!
+    }
+
+    stg::save_t json;
+    json.path = path;
+    json.doc_uuid = ui->tab_widget_doc->get_current_doc();
+
+    prop_controller->save_template(json);
+    //TODO: Do saving as Thread!
+}
+
+void MainWindow::save_doc_template_as() {
+    save_doc_template(true);
+}

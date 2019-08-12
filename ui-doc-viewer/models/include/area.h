@@ -1,5 +1,3 @@
-#include <utility>
-
 //
 // Created by pornosaur on 25.7.19.
 //
@@ -9,6 +7,7 @@
 
 #include <QUuid>
 #include <iostream>
+#include <jsoncpp/json/json.h>
 
 #include "types_utils.h"
 
@@ -29,6 +28,8 @@ namespace qmodel {
         inline area::area_t get_area_struct() const { return _area_struct; }
 
         area::area_t set_area_struct(const area::area_t &area_struct);
+
+        bool convert2json(Json::Value &json_data);
     };
 
 
@@ -50,6 +51,8 @@ namespace qmodel {
         void remove_area(const QString &area_uuid);
 
         bool update_area_struct(const QString &area_uuid, area::area_t &area_struct);
+
+        bool convert2json(Json::Value &json_data);
     };
 }
 

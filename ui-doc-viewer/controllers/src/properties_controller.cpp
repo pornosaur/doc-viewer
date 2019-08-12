@@ -64,3 +64,13 @@ void PropertiesController::update_area_struct(const area::area_t &area_struct) {
 
     update_area_struct(current_doc_uuid, current_area_uuid, area_struct);
 }
+
+void PropertiesController::save_template(const stg::save_t &json_data) {
+    auto *area_g = areas_map.value(json_data.doc_uuid, nullptr);
+    if (!area_g) return;
+
+    stg::save_t json = json_data;
+    area_g->convert2json(json.areas_json);
+
+    emit send_save_request(json);
+}

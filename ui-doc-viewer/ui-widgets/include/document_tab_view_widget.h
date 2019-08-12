@@ -20,6 +20,8 @@ namespace qview {
     public:
         explicit DocTabViewWidget(QWidget *parent = nullptr);
 
+        QString get_current_doc();
+
     public slots:
 
         void create_new_tab(const QString &tab_name, const QString &uuid);

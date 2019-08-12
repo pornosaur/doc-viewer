@@ -13,6 +13,13 @@ DocTabViewWidget::DocTabViewWidget(QWidget *parent) : QTabWidget(parent) {
     setDocumentMode(true);
 }
 
+QString DocTabViewWidget::get_current_doc() {
+    auto *tab = (DocTabWidget *) currentWidget();
+    if (!tab) return "";
+
+    return tab->get_renderer()->get_internal_id();
+}
+
 void DocTabViewWidget::create_new_tab(const QString &tab_name, const QString &uuid) {
     auto *new_tab = new qview::DocTabWidget(uuid, this);
     int idx = addTab(new_tab, QString());
