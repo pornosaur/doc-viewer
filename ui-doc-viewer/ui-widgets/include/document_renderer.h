@@ -39,6 +39,10 @@ namespace qview {
 
         void set_current_area_uuid(const QString &ara_uuid);
 
+        void _create_new_area(const QString &area_uuid, const area::area_t &area_struct);
+
+        void clear_selection();
+
     public slots:
 
         void set_document_pixmap(const QImage &image);

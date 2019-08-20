@@ -39,6 +39,9 @@ private:
     qcontroller::PropertiesController *prop_controller;
     qcontroller::ToolBoxController *toolbox_controller;
 
+
+    void keyPressEvent(QKeyEvent *event) override;
+
 private slots:
 
     void save_doc_template(bool checked);

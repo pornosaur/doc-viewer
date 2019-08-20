@@ -2,6 +2,7 @@
 // Created by pornosaur on 16.7.19.
 //
 
+#include <QtWidgets/QtWidgets>
 #include "document_tab_view_widget.h"
 
 using namespace qview;
@@ -11,6 +12,28 @@ DocTabViewWidget::DocTabViewWidget(QWidget *parent) : QTabWidget(parent) {
     setTabsClosable(true);
     setMovable(true);
     setDocumentMode(true);
+
+    connect(this, &DocTabViewWidget::currentChanged, this, &DocTabViewWidget::set_current_widget);
+    connect(this, &DocTabViewWidget::tabCloseRequested, this, [this](int ix) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Quit", "Close current document?",
+                                      QMessageBox::Yes | QMessageBox::No);
+
+        if (reply == QMessageBox::Yes) {
+            auto *tab = (DocTabWidget *) widget(ix);
+            if (tab) emit request_close_tab(tab->get_renderer()->get_internal_id());
+            removeTab(ix);
+        }
+    });
+}
+
+void DocTabViewWidget::close_tab(const QString &doc_uuid) {
+    auto *tab = (DocTabWidget *) currentWidget();
+    if (!tab) return;
+    if (!doc_uuid.isEmpty() && tab->get_renderer()->get_internal_id() != doc_uuid) return;
+
+    int idx = indexOf(tab);
+    emit tabCloseRequested(idx);
 }
 
 QString DocTabViewWidget::get_current_doc() {
@@ -21,6 +44,9 @@ QString DocTabViewWidget::get_current_doc() {
 }
 
 void DocTabViewWidget::create_new_tab(const QString &tab_name, const QString &uuid) {
+    auto *tab = (DocTabWidget *) currentWidget();
+    if (tab) tab->get_renderer()->clear_selection();
+
     auto *new_tab = new qview::DocTabWidget(uuid, this);
     int idx = addTab(new_tab, QString());
 
@@ -72,6 +98,11 @@ void DocTabViewWidget::update_area_uuid(const QString &area_uuid, const area::ar
     auto *tab = (DocTabWidget *) currentWidget();
     if (!tab) return;
 
-    tab->get_renderer()->set_current_area_uuid(area_uuid);
+    tab->get_renderer()->_create_new_area(area_uuid, area_struct);
+    //tab->get_renderer()->set_current_area_uuid(area_uuid);
     update_area_struct(area_uuid, area_struct);
+}
+
+void DocTabViewWidget::set_current_widget(int idx) {
+    if (auto *tab = (DocTabWidget *) widget(idx); tab) tab->get_renderer()->clear_selection();
 }

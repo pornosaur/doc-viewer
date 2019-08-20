@@ -30,13 +30,23 @@ void DocumentRenderer::set_current_area_uuid(const QString &ara_uuid) {
     }
 }
 
-void DocumentRenderer::add_template_area(const QPointF &pos) {
-    auto *template_area = new TemplateRect(pos.x(), pos.y(), 10, 10);
+void DocumentRenderer::_create_new_area(const QString &area_uuid, const area::area_t &area_struct) {
+    auto *template_area = new TemplateRect(area_struct.dimension._x, area_struct.dimension._y, 10, 10);
+    template_area->set_uuid(area_uuid);
     _scene->addItem(template_area);
 
     template_area->setForceResizing(true);
     template_area->setSelected(true);
     template_area->setFocus();
+}
+
+void DocumentRenderer::add_template_area(const QPointF &pos) {
+    /*auto *template_area = new TemplateRect(pos.x(), pos.y(), 10, 10);
+    _scene->addItem(template_area);
+
+    template_area->setForceResizing(true);
+    template_area->setSelected(true);
+    template_area->setFocus();*/
 
     emit create_new_area(area::area_t(pos.x(), pos.y()));
 }
@@ -108,6 +118,12 @@ void DocumentRenderer::keyPressEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key_Delete) {
         remove_template_area();
+    }
+}
+
+void DocumentRenderer::clear_selection() {
+    if (scene()) {
+        scene()->clearSelection();
     }
 }
 

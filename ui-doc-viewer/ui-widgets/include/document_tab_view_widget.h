@@ -24,6 +24,8 @@ namespace qview {
 
     public slots:
 
+        void close_tab(const QString &doc_uuid);
+
         void create_new_tab(const QString &tab_name, const QString &uuid);
 
         void rendering_image(const QImage &image);
@@ -36,6 +38,8 @@ namespace qview {
 
         void update_area_struct(const QString &area_uuid, const area::area_t &area_struct);
 
+        void set_current_widget(int idx);
+
     signals:
 
         void inquiry_for_page_image(const QString &uuid, int page);
@@ -46,6 +50,10 @@ namespace qview {
 
         void
         send_update_area_struct(const QString &doc_uuid, const QString &area_uuid, const area::area_t &area_struct);
+
+        void request_close_tab(const QString &uuid);
+
+
 
     };
 

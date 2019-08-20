@@ -4,6 +4,7 @@
 
 #include <QUuid>
 #include <iostream>
+#include <fstream>
 
 #include "area.h"
 
@@ -42,6 +43,23 @@ bool Area::convert2json(Json::Value &json_data) {
     return true;
 }
 
+area::area_t Area::convert2area(const Json::Value &json_area) {
+    area::area_t area_struct = {
+            false,
+            json_area["name"].asString(),
+            area::str_to_enum<area::Type>(json_area["type"].asString()),
+            area::strs_to_enum<area::Actions>(json_area["actions"].asString()),
+            {json_area["dimension"]["x"].asFloat(),
+             json_area["dimension"]["y"].asFloat(),
+             json_area["dimension"]["w"].asFloat(),
+             json_area["dimension"]["h"].asFloat()
+            },
+            static_cast<size_t>(json_area["page"].asInt())
+    };
+
+    return area_struct;
+}
+
 //-------------------------------------
 
 //--------AREA GROUP CLASS-------------
@@ -56,7 +74,7 @@ AreaGroup::~AreaGroup() {
 
 Area *AreaGroup::create_area(const area::area_t &area_struct) {
     auto *area = new Area(area_struct);
-    areas_map.insert(area->get_area_uuid(), area);
+    this->areas_map.insert(area->get_area_uuid(), area);
 
     return area;
 }
@@ -89,6 +107,30 @@ bool AreaGroup::convert2json(Json::Value &json_data) {
     }
 
     return true;
+}
+
+/* Convert and save in mem */
+std::vector<Area *> AreaGroup::convert2areas(Json::Value &json_data) {
+    if (!json_data.isArray()) return {};
+
+    std::vector<Area *> areas;
+    for (const auto &item : json_data) {
+        auto *area = create_area(Area::convert2area(item));
+        areas.push_back(area);
+    }
+
+    return std::move(areas);
+}
+
+std::vector<Area *> AreaGroup::load_from_file(const QString &path, Json::Value &root) {
+    root = Json::Value(Json::objectValue);
+
+    std::ifstream stream(path.toStdString(), std::ifstream::binary);
+    stream >> root;
+
+    if (!root.isMember("areas")) return {};
+
+    return std::move(convert2areas(root["areas"]));
 }
 
 //-------------------------------------

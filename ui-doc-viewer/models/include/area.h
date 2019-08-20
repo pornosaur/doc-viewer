@@ -23,6 +23,10 @@ namespace qmodel {
     public:
         explicit Area(area::area_t area_struct, QString area_uuid = QUuid::createUuid().toString());
 
+        ~Area() {
+            std::cout << "Delete area" << std::endl;
+        }
+
         inline QString get_area_uuid() const { return _area_uuid; }
 
         inline area::area_t get_area_struct() const { return _area_struct; }
@@ -30,6 +34,8 @@ namespace qmodel {
         area::area_t set_area_struct(const area::area_t &area_struct);
 
         bool convert2json(Json::Value &json_data);
+
+        static area::area_t convert2area(const Json::Value &json_area);
     };
 
 
@@ -53,6 +59,10 @@ namespace qmodel {
         bool update_area_struct(const QString &area_uuid, area::area_t &area_struct);
 
         bool convert2json(Json::Value &json_data);
+
+        std::vector<Area *> convert2areas(Json::Value &json_data);
+
+        std::vector<Area *> load_from_file(const QString &path, Json::Value &root);
     };
 }
 

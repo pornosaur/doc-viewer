@@ -13,6 +13,7 @@
 
 #include <string>
 #include <functional>
+#include <sstream>
 
 namespace area {
     Q_NAMESPACE
@@ -85,8 +86,39 @@ namespace area {
     }
 
     template<typename QEnum>
-    const char *enum_to_str(const QEnum &value) {
+    inline const char *enum_to_str(const QEnum &value) {
         return QMetaEnum::fromType<QEnum>().valueToKey(static_cast<int>(value));
+    }
+
+    template<typename QEnum>
+    inline QEnum str_to_enum(const std::string &str, bool *ok = nullptr) {
+        return static_cast<QEnum>(QMetaEnum::fromType<QEnum>().keyToValue(str.c_str(), ok));
+    }
+
+    /**
+     * Enum must overload |= operator!
+     */
+    template<typename QEnum>
+    QEnum strs_to_enum(const std::string &str) {
+        std::string token;
+        std::istringstream token_stream(str);
+
+        bool first = true;
+        QEnum en;
+        while (std::getline(token_stream, token, '+')) {
+            bool ok = false;
+            if (QEnum e = str_to_enum<QEnum>(token, &ok); ok) {
+                if (first) {
+                    first = false;
+                    en = e;
+                } else {
+                    en |= e;
+                }
+
+            }
+        }
+
+        return en;
     }
 
     template<typename T>
@@ -120,7 +152,8 @@ namespace area {
             return (static_cast<int>(type) - (static_cast<int>(Type::ITERATION_BEGIN) + 1));
         }
 
-        inline std::string get_type_str() { return area::enum_to_str(type); }
+        [[nodiscard]]
+        inline std::string get_type_str() const { return area::enum_to_str(type); }
 
         std::string get_actions_str() {
             std::string actions_str;

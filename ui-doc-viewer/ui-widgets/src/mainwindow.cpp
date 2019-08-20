@@ -18,7 +18,29 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    QMetaObject::connectSlotsByName(this);
+    //QMetaObject::connectSlotsByName(this);
+
+    /*
+    if (QFile f("train.txt"); f.open(QFile::ReadOnly)){
+        QTextStream rs(&f);
+        if (QFile w("doc_list_train.txt"); w.open(QFile::WriteOnly)) {
+            QTextStream ws(&w);
+
+            while (!rs.atEnd()) {
+                QStringList l = rs.readLine().split(' ');
+                if (l.size() != 2) continue;
+
+                int type = l.at(1).toInt();
+                if (type == 1 || type == 11 || type == 14) ws << "images/" + l.at(0) << endl;
+            }
+
+            f.close();
+            w.close();
+        }
+    }
+     */
+
+    std::cout << "FINISHED" << std::endl;
 
     doc_controller = new qcontroller::DocController();
     prop_controller = new qcontroller::PropertiesController();
@@ -48,6 +70,9 @@ void MainWindow::connect_signals() {
     connect(ui->action_load_document, SIGNAL(triggered()), doc_controller, SLOT(load_document()));
     connect(doc_controller, &qcontroller::DocController::document_changed, ui->tab_widget_doc,
             &qview::DocTabViewWidget::create_new_tab);
+    connect(doc_controller, &qcontroller::DocController::current_document_changed, prop_controller,
+            &qcontroller::PropertiesController::set_current_selected_area);
+
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::inquiry_for_page_image, doc_controller,
             &qcontroller::DocController::convert_to_qimage);
     connect(doc_controller, &qcontroller::DocController::respond_qimage, ui->tab_widget_doc,
@@ -56,10 +81,18 @@ void MainWindow::connect_signals() {
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_new_area, toolbox_controller,
             &qcontroller::ToolBoxController::request_settings);
     connect(toolbox_controller, &qcontroller::ToolBoxController::send_area, prop_controller,
-            &qcontroller::PropertiesController::add_area);
+            &qcontroller::PropertiesController::create_new_area);
 
-    connect(prop_controller, &qcontroller::PropertiesController::send_area_uuid, ui->tab_widget_doc,
+    connect(doc_controller, &qcontroller::DocController::request_delete_doc, prop_controller,
+            &qcontroller::PropertiesController::remove_doc_template);
+    connect(doc_controller, &qcontroller::DocController::request_close_delete_doc, ui->tab_widget_doc,
+            &qview::DocTabViewWidget::close_tab);
+    connect(ui->tab_widget_doc, &qview::DocTabViewWidget::request_close_tab, doc_controller,
+            &qcontroller::DocController::remove_document);
+
+    connect(prop_controller, &qcontroller::PropertiesController::send_created_area, ui->tab_widget_doc,
             &qview::DocTabViewWidget::update_area_uuid);
+
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_remove_area, prop_controller,
             &qcontroller::PropertiesController::remove_area);
     connect(ui->tab_widget_doc, &qview::DocTabViewWidget::send_update_area_struct, prop_controller,
@@ -83,30 +116,35 @@ void MainWindow::connect_signals() {
 
     connect(prop_controller, &qcontroller::PropertiesController::send_save_request, doc_controller,
             &qcontroller::DocController::save_document_template);
+
+    connect(ui->action_load, &QAction::triggered, prop_controller, &qcontroller::PropertiesController::load_template);
+    connect(ui->action_load_document_list, &QAction::triggered, doc_controller,
+            &qcontroller::DocController::load_document_list);
 }
 
 void MainWindow::save_doc_template(bool checked) {
-    QString path = "";
-    if (checked) {
-        QFileDialog dialog(this);
-        dialog.setOption(QFileDialog::ShowDirsOnly, true);
-        dialog.setFileMode(QFileDialog::DirectoryOnly);
-        dialog.setAcceptMode(QFileDialog::AcceptSave);
-
-        dialog.exec();
-        if (!dialog.selectedFiles().empty()) path = dialog.selectedFiles().at(0);
-    } else {
-        //TODO: default path!
-    }
-
-    stg::save_t json;
-    json.path = path;
-    json.doc_uuid = ui->tab_widget_doc->get_current_doc();
-
-    prop_controller->save_template(json);
-    //TODO: Do saving as Thread!
+    prop_controller->save_template(checked);
 }
 
 void MainWindow::save_doc_template_as() {
     save_doc_template(true);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event) {
+
+
+    switch (event->key()) {
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+            prop_controller->save_template(false);
+            break;
+        case Qt::Key_Backspace:
+            doc_controller->load_previous();
+            break;
+        case Qt::Key_Escape:
+            doc_controller->corrupted_doc();
+            break;
+    }
+
+    QMainWindow::keyPressEvent(event);
 }
